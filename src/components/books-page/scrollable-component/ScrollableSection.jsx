@@ -7,6 +7,7 @@ export default function ScrollableSection({
   sectionTitle,
   data,
   component = "BookCard",
+  onItemClick,
 }) {
   const scrollContainerRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -32,14 +33,7 @@ export default function ScrollableSection({
   const renderItem = (item, index) => {
     switch (component) {
       case "BookCard":
-        return (
-          <BookCard
-            key={index}
-            title={item.title}
-            author={item.author}
-            cover={item.cover}
-          />
-        );
+        return <BookCard key={index} book={item} onBookClick={onItemClick} />;
       case "AuthorCard":
         return (
           <Authors
@@ -50,14 +44,7 @@ export default function ScrollableSection({
           />
         );
       default:
-        return (
-          <BookCard
-            key={index}
-            title={item.title}
-            author={item.author}
-            cover={item.cover}
-          />
-        );
+        return <BookCard key={index} book={item} onBookClick={onItemClick} />;
     }
   };
 

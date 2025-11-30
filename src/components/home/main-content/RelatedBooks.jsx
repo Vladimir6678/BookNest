@@ -1,9 +1,12 @@
 import "./related-books-style.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import BookCard from "../../books-page/book-card/BookCard.jsx";
+import BookModal from "../../books-page/BookModal/BookModal.jsx";
 
 export default function RelatedBooks() {
   const scrollContainerRef = useRef(null);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -24,84 +27,141 @@ export default function RelatedBooks() {
   };
   const books = [
     {
+      id: 1,
       title: "The Alchemist",
       author: "Paulo Coelho",
       cover: "https://picsum.photos/200/300",
+      year: 1988,
+      genre: "Fiction, Adventure",
+      rating: 4,
+      pages: 208,
+      description:
+        "A mystical story of a shepherd boy's journey to discover his personal legend.",
     },
     {
+      id: 2,
       title: "Atomic Habits",
       author: "James Clear",
       cover: "https://picsum.photos/200/301",
+      year: 2018,
+      genre: "Self-help, Productivity",
+      rating: 5,
+      pages: 320,
+      description:
+        "Tiny Changes, Remarkable Results: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
     },
     {
+      id: 3,
       title: "Deep Work",
       author: "Cal Newport",
       cover: "https://picsum.photos/200/302",
+      year: 2016,
+      genre: "Productivity, Business",
+      rating: 4,
+      pages: 304,
+      description: "Rules for Focused Success in a Distracted World",
     },
     {
+      id: 4,
       title: "Thinking, Fast and Slow",
       author: "Daniel Kahneman",
       cover: "https://picsum.photos/200/303",
+      year: 2011,
+      genre: "Psychology, Nonfiction",
+      rating: 4,
+      pages: 499,
+      description:
+        "Explores the two systems that drive the way we think—System 1 and System 2.",
     },
     {
-      title: "The Psychology of Money",
-      author: "Morgan Housel",
-      cover: "https://picsum.photos/200/304",
+      id: 1,
+      title: "The Alchemist",
+      author: "Paulo Coelho",
+      cover: "https://picsum.photos/200/300",
+      year: 1988,
+      genre: "Fiction, Adventure",
+      rating: 4,
+      pages: 208,
+      description:
+        "A mystical story of a shepherd boy's journey to discover his personal legend.",
     },
     {
-      title: "Sapiens",
-      author: "Yuval Noah Harari",
-      cover: "https://picsum.photos/200/305",
+      id: 2,
+      title: "Atomic Habits",
+      author: "James Clear",
+      cover: "https://picsum.photos/200/301",
+      year: 2018,
+      genre: "Self-help, Productivity",
+      rating: 5,
+      pages: 320,
+      description:
+        "Tiny Changes, Remarkable Results: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
     },
     {
-      title: "The 7 Habits of Highly Effective People",
-      author: "Stephen R. Covey",
-      cover: "https://picsum.photos/200/306",
+      id: 1,
+      title: "The Alchemist",
+      author: "Paulo Coelho",
+      cover: "https://picsum.photos/200/300",
+      year: 1988,
+      genre: "Fiction, Adventure",
+      rating: 4,
+      pages: 208,
+      description:
+        "A mystical story of a shepherd boy's journey to discover his personal legend.",
     },
     {
-      title: "The Power of Now",
-      author: "Eckhart Tolle",
-      cover: "https://picsum.photos/200/307",
+      id: 2,
+      title: "Atomic Habits",
+      author: "James Clear",
+      cover: "https://picsum.photos/200/301",
+      year: 2018,
+      genre: "Self-help, Productivity",
+      rating: 5,
+      pages: 320,
+      description:
+        "Tiny Changes, Remarkable Results: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
     },
     {
-      title: "Dune",
-      author: "Frank Herbert",
-      cover: "https://picsum.photos/200/308",
+      id: 1,
+      title: "The Alchemist",
+      author: "Paulo Coelho",
+      cover: "https://picsum.photos/200/300",
+      year: 1988,
+      genre: "Fiction, Adventure",
+      rating: 4,
+      pages: 208,
+      description:
+        "A mystical story of a shepherd boy's journey to discover his personal legend.",
     },
     {
-      title: "To Kill a Mockingbird",
-      author: "Harper Lee",
-      cover: "https://picsum.photos/200/309",
-    },
-    {
-      title: "1984",
-      author: "George Orwell",
-      cover: "https://picsum.photos/200/310",
-    },
-    {
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      cover: "https://picsum.photos/200/311",
-    },
-    {
-      title: "Pride and Prejudice",
-      author: "Jane Austen",
-      cover: "https://picsum.photos/200/312",
+      id: 2,
+      title: "Atomic Habits",
+      author: "James Clear",
+      cover: "https://picsum.photos/200/301",
+      year: 2018,
+      genre: "Self-help, Productivity",
+      rating: 5,
+      pages: 320,
+      description:
+        "Tiny Changes, Remarkable Results: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
     },
   ];
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBook(null);
+  };
   return (
     <>
       <main id="cards-container">
         <h1>Related Books</h1>
         <div id="cards-wrapper" ref={scrollContainerRef}>
           {books.map((book, index) => (
-            <BookCard
-              key={index}
-              title={book.title}
-              author={book.author}
-              cover={book.cover}
-            />
+            <BookCard key={index} book={book} onBookClick={handleBookClick} />
           ))}
         </div>
 
@@ -114,6 +174,12 @@ export default function RelatedBooks() {
           </button>
         </div>
       </main>
+
+      <BookModal
+        book={selectedBook}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }

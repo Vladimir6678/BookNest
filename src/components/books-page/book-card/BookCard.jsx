@@ -1,15 +1,19 @@
 import "./book-card-styles.css";
 
-export default function BookCard({ title, author, cover }) {
+export default function BookCard({ book, onBookClick }) {
+  const handleClick = () => {
+    onBookClick(book);
+  };
+
   return (
-    <article className="card">
+    <article className="card" onClick={handleClick}>
       <img
-        src="src/assets/images/atomic-habits-book-cover.jpg"
-        alt="Book Cover"
+        src={book.cover || "src/assets/images/atomic-habits-book-cover.jpg"}
+        alt={`${book.title} Cover`}
       />
       <div className="book-info">
-        <h2>Atomic Habits</h2>
-        <p>James Clear</p>
+        <h2>{book.title}</h2>
+        <p>{book.author}</p>
       </div>
     </article>
   );
