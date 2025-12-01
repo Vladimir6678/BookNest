@@ -1,0 +1,128 @@
+article#reviews-section {
+  padding: 2rem;
+  margin-top: 20rem;
+  height: 30rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-family: "Roboto", sans-serif;
+  }
+
+  section#reviews-content {
+    width: 45%;
+    height: 100%;
+    margin: 10px auto;
+    background-color: #f5ebe9;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+
+    h2 {
+      font-family: "Roboto", sans-serif;
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 2.5rem;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.1s ease;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffd700;
+    }
+
+    .star-rating input:checked ~ label {
+      color: #ffd700;
+    }
+
+    .star-rating input:checked + label {
+      color: #ffed85;
+    }
+
+    .star-rating label:active {
+      transform: scale(0.9);
+    }
+
+    .rating-value {
+      margin-top: 1rem;
+      font-family: "Roboto", sans-serif;
+      color: #333;
+      font-size: 1.2rem;
+    }
+
+    div#input-review {
+      margin-top: 1.5rem;
+      width: 100%;
+
+      input[type="text"] {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        font-family: "Roboto", sans-serif;
+      }
+    }
+
+    div#submit-review-section {
+      margin-top: 1.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        font-family: "Roboto", sans-serif;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      button#submit-review-button {
+        margin-top: 0;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: var(--accent);
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: var(--accent-light);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+  }
+}

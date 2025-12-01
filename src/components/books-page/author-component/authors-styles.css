@@ -1,0 +1,81 @@
+div.author-card {
+  border: none;
+  width: 500px;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 160px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+div.author-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+div.author-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1db954, #1ed760);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+div.author-card:hover::before {
+  transform: scaleX(1);
+}
+
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+}
+
+img.author-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+  transition: all 0.3s ease;
+}
+
+div.author-card:hover img.author-avatar {
+  border-color: #1db954;
+  transform: scale(1.05);
+}
+
+.author-info {
+  margin-top: 10px;
+}
+
+.author-name {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.books-count {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.8rem;
+  color: #b3b3b3;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}

@@ -1,6 +1,5 @@
 import { Link } from "react-router";
-import "./header-style.css"
-
+import "./header-style.css";
 
 export default function Header() {
   return (
@@ -17,8 +16,6 @@ export default function Header() {
           <Link to="/login">Login</Link>
           <Link to="/register">Register</Link>
         </div>
-
-
       </nav>
     </header>
   );

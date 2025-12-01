@@ -1,0 +1,36 @@
+import "./footer-style.css";
+
+export default function Footer() {
+  return (
+    <>
+      <footer id="foot-section">
+        <h1 id="foot-title">BookNest</h1>
+        <div class="foot-invoices">
+          <h2>About</h2>
+          <hgroup class="links-section">
+            <h3>
+              <a href="#">Careers</a>
+            </h3>
+            <h3>
+              <a href="#">Privacy and Policy</a>
+            </h3>
+            <h3>
+              <a href="#">Verification application</a>
+            </h3>
+          </hgroup>
+        </div>
+        <div class="foot-invoices">
+          <h2>Support</h2>
+          <hgroup class="links-section">
+            <h3>
+              <a href="#">Contact Us</a>
+            </h3>
+            <h3>
+              <a href="#">Customer Support</a>
+            </h3>
+          </hgroup>
+        </div>
+      </footer>
+    </>
+  );
+}
