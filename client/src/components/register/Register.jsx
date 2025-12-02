@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import InputField from "../../Input.jsx";
-
+import InputField from "../input/InputField.jsx";
 export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState({

@@ -1,39 +1,34 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import InputField from "../../Input.jsx";
+import useForm from "../../hooks/useForm";
+import InputField from "../input/InputField.jsx";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({
+  const { loginHandler, error } = useContext(UserContext);
+
+  const submitHandler = async (formValues) => {
+    if (!formValues.email || !formValues.password) {
+      return alert("All fields are required!");
+    }
+
+    try {
+      await loginHandler(formValues.email, formValues.password);
+      navigate("/");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const { register, formSubmit } = useForm(submitHandler, {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
-
-  function handleChange(e) {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!values.email || !values.password) {
-      setError("All fields are required.");
-      return;
-    }
-
-    // MOCK LOGIN (replace later with backend)
-    if (values.email === "test@test.com" && values.password === "123456") {
-      localStorage.setItem("auth", "true");
-      navigate("/");
-    } else {
-      setError("Invalid credentials.");
-    }
-  }
 
   return (
     <div className="form-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" action={formSubmit}>
         <h2>Login</h2>
 
         {error && <p className="error">{error}</p>}
@@ -41,19 +36,15 @@ export default function Login() {
         <InputField
           label="Email"
           type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={values.email}
-          onChange={handleChange}
+          {...register("email")}
+          placeholder="Email"
         />
 
         <InputField
           label="Password"
           type="password"
-          name="password"
-          placeholder="Enter your password"
-          value={values.password}
-          onChange={handleChange}
+          {...register("password")}
+          placeholder="Password"
         />
 
         <button className="auth-btn" type="submit">Login</button>

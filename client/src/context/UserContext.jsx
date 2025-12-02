@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import useRequest from "../hooks/useRequest";
+import useRequest from "../hooks/useFetch.js";
 
 const UserContext = createContext({
     isAuthenticated: false,
@@ -24,10 +24,10 @@ export function UserProvider({
     const registerHandler = async (email, password) => {
         const newUser = { email, password };
 
-        // Register API call 
+       
         const result = await request('/users/register', 'POST', newUser);
 
-        // Login user after register
+      
         setUser(result);
     };
 
