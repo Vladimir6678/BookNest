@@ -5,33 +5,28 @@ import { useContext } from "react";
 import UserContext from "../../context/UserContext.jsx";
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { loginHandler, error } = useContext(UserContext);
+    const navigate = useNavigate();
+    const { loginHandler, error } = useContext(UserContext);
 
-  const submitHandler = async (formValues) => {
-    if (!formValues.email || !formValues.password) {
-      return alert("All fields are required!");
-    }
+    const submitHandler = async ({email, password}) => {
+        if (!email || !password) {
+            return alert("All fields are required!");
+        }
+        try {
+            await loginHandler(email, password);
+            navigate('/');
+        } catch (err) {
+            alert(err.message);
+        }
+    };
 
-    try {
-      await loginHandler(formValues.email, formValues.password);
-      navigate("/");
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+    const { register, formSubmit } = useForm(submitHandler, { email: "", password: "" });
 
-  const { register, formSubmit } = useForm(submitHandler, {
-    email: "",
-    password: "",
-  });
-
-  return (
-    <div className="form-container">
-      <form className="auth-form" action={formSubmit}>
-        <h2>Login</h2>
-
-        {error && <p className="error">{error}</p>}
+    return (
+        <div className="form-container">
+            <form className="auth-form" onSubmit={formSubmit}>
+                <h2>Login</h2>
+                {error && <p className="error">{error}</p>}
 
         <InputField
           label="Email"

@@ -6,7 +6,7 @@ export default function useRequest(url, initialState) {
     const { user, isAuthenticated } = useContext(UserContext);
     const [data, setData] = useState(initialState);
 
-    // FIX: Memoize request to prevent infinite loop
+
     const request = useCallback(async (url, method, data, config = {}) => {
         let options = {};
 
@@ -31,7 +31,7 @@ export default function useRequest(url, initialState) {
         const response = await fetch(`${baseUrl}${url}`, options);
 
         if (!response.ok) {
-            throw response.statusText;
+            throw new Error(response.statusText);
         }
 
         if (response.status === 204) {
@@ -48,7 +48,7 @@ export default function useRequest(url, initialState) {
             .then(result => setData(result))
             .catch(err => alert(err));
 
-    }, [url, request]); // request is now stable
+    }, [url, request]); 
 
     return {
         request,

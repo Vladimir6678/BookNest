@@ -4,6 +4,7 @@ import useRequest from "../hooks/useFetch.js";
 const UserContext = createContext({
     isAuthenticated: false,
     user: {
+        username: '',
         email: '',
         password: '',
         _createdOn: 0,
@@ -21,8 +22,8 @@ export function UserProvider({
     const [user, setUser] = useState(null);
     const { request } = useRequest();
 
-    const registerHandler = async (email, password) => {
-        const newUser = { email, password };
+    const registerHandler = async (username, email, password) => {
+        const newUser = { username, email, password };
 
        
         const result = await request('/users/register', 'POST', newUser);

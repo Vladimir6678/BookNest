@@ -10,7 +10,7 @@ export default function useForm(callback, initialValues) {
         }))
     };
 
-    const formAction = (formData) => {
+    const formSubmit = (formData) => {
         callback(values, formData);
     }
 
@@ -27,6 +27,6 @@ export default function useForm(callback, initialValues) {
         setValues,
         register,
         changeHandler,
-        formAction,
+        formSubmit,
     }
 }
