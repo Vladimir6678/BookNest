@@ -3,7 +3,7 @@ import Header from "./components/navigation/Header.jsx";
 import Home from "./components/home/Home.jsx";
 import Books from "./components/books-page/dashboard/Dashboard.jsx";
 import Login from "./components/login/Login.jsx";
-import Register from "./components/Register.jsx";
+import Register from "./components/register/Register.jsx";
 
 export default function App() {
   return (
