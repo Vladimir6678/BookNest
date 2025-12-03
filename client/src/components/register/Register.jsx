@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import InputField from "../input/InputField.jsx";
+import { Link } from "react-router";
+import "./register.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ export default function Register() {
           label="Username"
           type="text"
           name="username"
-          placeholder="Your username"
+          placeholder="Username"
           value={values.username}
           onChange={handleChange}
         />
@@ -54,7 +56,7 @@ export default function Register() {
           label="Email"
           type="email"
           name="email"
-          placeholder="Your email"
+          placeholder="Email"
           value={values.email}
           onChange={handleChange}
         />
@@ -63,7 +65,7 @@ export default function Register() {
           label="Password"
           type="password"
           name="password"
-          placeholder="Create a password"
+          placeholder="Password"
           value={values.password}
           onChange={handleChange}
         />
@@ -78,6 +80,9 @@ export default function Register() {
         />
 
         <button className="auth-btn" type="submit">Register</button>
+        <p className="auth-text">
+          Already registered? <Link to="/login" className="auth-link">Login</Link>
+        </p>
       </form>
     </div>
   );
