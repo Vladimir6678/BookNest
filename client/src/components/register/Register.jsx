@@ -1,44 +1,50 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import InputField from "../input/InputField.jsx";
 import { Link } from "react-router";
 import "./register.css";
+import UserContext from "../../context/UserContext.jsx";
+import useForm from "../../hooks/useForm.js";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({
-    username: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-  });
+  const { registerHandler } = useContext(UserContext);
   const [error, setError] = useState("");
 
-  function handleChange(e) {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
 
-    if (!values.username || !values.email || !values.password || !values.repeatPassword) {
+  const handleSubmit = async (values) => {
+    const { username, email, password, repeatPassword } = values;
+
+    if (!username || !email || !password || !repeatPassword) {
       setError("All fields are required.");
       return;
     }
 
-    if (values.password !== values.repeatPassword) {
+    if (password !== repeatPassword) {
       setError("Passwords do not match.");
       return;
     }
+    try {
+      await registerHandler(username, email, password);
 
-    // MOCK REGISTER ACTION
-    localStorage.setItem("auth", "true");
-    navigate("/");
+      navigate("/")
+    } catch (error) {
+      setError(error.message);
+    }
+
   }
+
+  const { register, formSubmit} = useForm(handleSubmit, {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
 
   return (
     <div className="form-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" action={formSubmit}>
         <h2>Create an Account</h2>
 
         {error && <p className="error">{error}</p>}
@@ -46,37 +52,31 @@ export default function Register() {
         <InputField
           label="Username"
           type="text"
-          name="username"
           placeholder="Username"
-          value={values.username}
-          onChange={handleChange}
+          {...register('username')}
         />
 
         <InputField
           label="Email"
           type="email"
-          name="email"
           placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
+          {...register('email')}
+         
         />
 
         <InputField
           label="Password"
-          type="password"
-          name="password"
+          type="password"         
           placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
+          {...register('password')}
+        
         />
 
         <InputField
           label="Repeat Password"
           type="password"
-          name="repeatPassword"
           placeholder="Repeat your password"
-          value={values.repeatPassword}
-          onChange={handleChange}
+        {...register('repeatPassword')}
         />
 
         <button className="auth-btn" type="submit">Register</button>

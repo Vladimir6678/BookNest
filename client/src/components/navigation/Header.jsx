@@ -22,7 +22,7 @@ export default function Header() {
                 <div className="right-section">
                     {isAuthenticated ? (
                         <>
-                            <span className="welcome">Hi, {user?.email}</span>
+                            <span className="welcome">Hi, {user?.username}</span>
                             <button className="logout-btn" onClick={logoutHandler}>
                                 Logout
                             </button>
