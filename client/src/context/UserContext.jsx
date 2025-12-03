@@ -41,7 +41,7 @@ export function UserProvider({
     };
 
     const logoutHandler = () => {
-        return request('/users/logout', 'GET', null, { accessToken: user.accessToken })
+        return request('/users/logout', 'GET', null, { accessToken: user?.accessToken })
             .finally(() => setUser(null));
     };
 
@@ -58,12 +58,6 @@ export function UserProvider({
             {children}
         </UserContext.Provider>
     );
-}
-
-export function useUserContext() {
-    const contextData = useContext(UserContext);
-
-    return contextData;
 }
 
 export default UserContext;

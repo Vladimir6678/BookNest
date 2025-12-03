@@ -1,55 +1,126 @@
 .header {
-  background: transparent;
-  position: absolute;
-  padding: 20px;
   width: 100%;
-  z-index: 10;
+  padding: 18px 0;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+}
 
+/* CENTER CONTENT */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+/* NAV LAYOUT */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LEFT SECTION */
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* LOGO */
+.logo {
+  font-size: 28px;
+  font-family: "Georgia", serif;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* NAV LINKS */
+.nav-links a,
+.right-section a {
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+  color: #333;
+  margin-right: 22px;
+  position: relative;
+  padding-bottom: 3px;
+}
+
+/* UNDERLINE EFFECT */
+.nav-links a::after,
+.right-section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+/* HOVER */
+.nav-links a:hover,
+.right-section a:hover {
+  color: var(--accent);
+}
+
+.nav-links a:hover::after,
+.right-section a:hover::after {
+  transform: scaleX(1);
+}
+
+/* RIGHT SECTION */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* WELCOME TEXT */
+.welcome {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #666;
+  margin-right: 10px;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  padding: 6px 14px;
+  background-color: var(--accent);
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #d64545;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
   .nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    div {
-      .logo {
-        font-size: 25px;
-        font-family: "Georgia", serif;
-        color: var(--accent);
-        display: inline-block;
-        margin-right: 25px;
-      }
-      a {
-        font-family: "Roboto", sans-serif;
-        font-weight: bold;
-        text-decoration: none;
-        color: #000000;
-        font-size: 18px;
-        margin-right: 25px;
-        position: relative;
-        padding-bottom: 2px;
-      }
+  .left-section {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-      a::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: var(--accent);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
-      }
-
-      a:hover {
-        color: var(--accent);
-      }
-
-      a:hover::after {
-        transform: scaleX(1);
-      }
-    }
+  .right-section {
+    gap: 12px;
   }
 }

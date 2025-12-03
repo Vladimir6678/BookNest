@@ -12,6 +12,9 @@ export default function Login() {
         if (!email || !password) {
             return alert("All fields are required!");
         }
+
+        console.log("heyyyyyy");
+
         try {
             await loginHandler(email, password);
             navigate('/');
@@ -24,7 +27,7 @@ export default function Login() {
 
     return (
         <div className="form-container">
-            <form className="auth-form" onSubmit={formSubmit}>
+            <form className="auth-form" action={formSubmit}>
                 <h2>Login</h2>
                 {error && <p className="error">{error}</p>}
 

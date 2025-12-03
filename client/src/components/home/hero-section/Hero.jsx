@@ -1,24 +1,36 @@
+import { useContext } from "react";
 import "./hero-style.css";
+import UserContext from "../../../context/UserContext.jsx";
+import { useNavigate } from "react-router";
 
 export default function Hero() {
+  const navigate = useNavigate();
+   const {isAuthenticated} = useContext(UserContext);
+
+  const clickHandle = () =>{
+        if(isAuthenticated){
+             navigate("/books");
+        } else{
+             navigate("/login")
+        }
+
+        
+  }
   return (
-    <>
-      <section className="hero">
-        <section className="hero-description">
-          <h1>Find Your Next Favorite Book</h1>
-          <p>
-            Dive into a world of endless literary possibilities where every page
-            turns into an adventure. Discover captivating stories that will
-            transport you to distant lands, introduce you to unforgettable
-            characters, and spark your imagination like never before. Whether
-            you're seeking thrilling mysteries, heartwarming romances,
-            thought-provoking non-fiction, or epic fantasies, our carefully
-            curated collection connects you with books that don't just tell
-            stories—they transform perspectives.
-          </p>
-        </section>
-        <button className="explore">Browse Books</button>
-      </section>
-    </>
+    <section className="hero">
+      <div className="hero-content">
+        <h1>Find Your Next Favorite Book</h1>
+        <p>
+          Dive into a world of endless literary possibilities where every page
+          turns into an adventure. Discover captivating stories that transport
+          you to distant lands, introduce unforgettable characters, and spark
+          your imagination. Whether you're seeking thrilling mysteries,
+          heartwarming romances, or epic fantasies—your next favorite book is
+          waiting.
+        </p>
+
+        <button  onClick={clickHandle} className="explore">Browse Books</button>
+      </div>
+    </section>
   );
 }

@@ -24,14 +24,14 @@ export default function useRequest(url, initialState) {
         if (config.accessToken || isAuthenticated) {
             options.headers = {
                 ...options.headers,
-                'X-Authorization': config.accessToken || user.accessToken,
+                'X-Authorization': config.accessToken || user?.accessToken,
             };
         }
 
         const response = await fetch(`${baseUrl}${url}`, options);
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw response.statusText;
         }
 
         if (response.status === 204) {

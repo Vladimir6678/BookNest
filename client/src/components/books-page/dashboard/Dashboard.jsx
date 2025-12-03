@@ -13,6 +13,7 @@ export default function Books() {
   };
 
   const handleBookClick = (book) => {
+    // set your book url here 
     setSelectedBook(book);
     setIsModalOpen(true);
   };

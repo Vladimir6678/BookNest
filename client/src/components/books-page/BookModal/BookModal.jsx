@@ -71,7 +71,7 @@ export default function BookModal({ book, isOpen, onClose }) {
           <div className="modal-details">
             <h2>{book.title}</h2>
             <p className="author">by {book.author}</p>
-
+              {book.id && <p className="id">Book Id: {book.id}</p>}
             {book.year && <p className="year">Published: {book.year}</p>}
             {book.genre && <p className="genre">Genre: {book.genre}</p>}
             {book.rating && (

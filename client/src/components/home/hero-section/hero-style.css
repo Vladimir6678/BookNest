@@ -1,54 +1,74 @@
-section.hero {
-  padding: 5rem;
-  height: 30rem;
-  text-align: center;
+.hero {
+  height: 32rem;
+  padding: 4rem 2rem;
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-around;
+  align-items: center;
 
-  background-image: radial-gradient(
-      circle at 30% 50%,
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.2)
-    ),
+  /* Background image + soft cinematic overlay */
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0,0,0,0.25)),
     url("src/assets/images/download.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
+}
 
-  section.hero-description {
-    text-align: start;
-    max-width: 600px;
-    padding-inline: 1rem;
-    padding-top: 1rem;
+/* --- HERO CONTENT WRAPPER --- */
+.hero-content {
+  max-width: 650px;
+  color: white;
+}
 
-    h1 {
-      font-size: 42px;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
+/* Title */
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
 
-    p {
-      color: white;
-      font-size: 18px;
-      font-family: "Roboto", sans-serif;
-      margin-top: -10px;
-      margin-bottom: 30px;
-    }
+/* Paragraph */
+.hero-content p {
+  font-size: 1.1rem;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* CTA BUTTON */
+.explore {
+  padding: 14px 34px;
+  background: var(--accent);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.explore:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    text-align: center;
+    padding: 3rem 1.5rem;
   }
 
-  .explore {
-    padding: 12px 28px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: var(--accent);
-    color: white;
+  .hero-content {
+    max-width: 100%;
   }
 
-  .explore:hover {
-    background: var(--accent-light);
+  .hero-content h1 {
+    font-size: 2.4rem;
   }
 }

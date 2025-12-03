@@ -147,6 +147,7 @@ export default function RelatedBooks() {
     },
   ];
   const handleBookClick = (book) => {
+    // set your book url logix here
     setSelectedBook(book);
     setIsModalOpen(true);
   };
