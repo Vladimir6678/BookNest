@@ -10,7 +10,7 @@ export default function Header() {
         <header className="header">
             <nav className="nav container">
                 <div className="left-section">
-                    <h2 className="logo">BookNest</h2>
+                    <h2 className="logo"><Link to="/">BookNest</Link></h2>
 
                     <div className="nav-links">
                         <Link to="/">Home</Link>

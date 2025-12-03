@@ -1,74 +1,79 @@
 .hero {
-  height: 32rem;
-  padding: 4rem 2rem;
-  position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
-
-  /* Background image + soft cinematic overlay */
+  min-height: 80vh;
+  padding: 3rem 2rem;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0,0,0,0.25)),
+    radial-gradient(circle at 30% 50%, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),
     url("src/assets/images/download.jpg");
   background-size: cover;
   background-position: center;
-}
-
-/* --- HERO CONTENT WRAPPER --- */
-.hero-content {
-  max-width: 650px;
   color: white;
+  position: relative;
 }
 
-/* Title */
+.hero-content {
+  max-width: 700px;
+  text-align: left;
+}
+
 .hero-content h1 {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--accent);
+  color: #640b90; 
   margin-bottom: 1rem;
   line-height: 1.2;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+  animation: fadeInDown 1s ease forwards;
 }
 
-/* Paragraph */
 .hero-content p {
-  font-size: 1.1rem;
-  font-family: "Roboto", sans-serif;
-  line-height: 1.6;
-  opacity: 0.9;
+  font-size: 1.2rem;
+  line-height: 1.8;
   margin-bottom: 2rem;
+  color: #f0f0f0;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  animation: fadeIn 1.5s ease forwards;
 }
 
-/* CTA BUTTON */
-.explore {
-  padding: 14px 34px;
-  background: var(--accent);
+
+.hero-content .explore {
+  padding: 14px 30px;
+  background: #640b90;
   border: none;
-  color: white;
   border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-
-  transition: transform 0.25s ease, background 0.25s ease;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.explore:hover {
-  background: var(--accent-light);
-  transform: translateY(-2px);
+.hero-content .explore:hover {
+  background: #cb72f7;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-  .hero {
-    height: auto;
-    text-align: center;
-    padding: 3rem 1.5rem;
-  }
 
-  .hero-content {
-    max-width: 100%;
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
   }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .hero-content h1 {
-    font-size: 2.4rem;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

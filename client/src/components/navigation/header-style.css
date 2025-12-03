@@ -8,28 +8,27 @@
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* CENTER CONTENT */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 25px;
 }
 
-/* NAV LAYOUT */
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* LEFT SECTION */
+
 .left-section {
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
-/* LOGO */
+
 .logo {
   font-size: 28px;
   font-family: "Georgia", serif;
@@ -37,7 +36,7 @@
   color: var(--accent);
 }
 
-/* NAV LINKS */
+
 .nav-links a,
 .right-section a {
   text-decoration: none;
@@ -50,7 +49,7 @@
   padding-bottom: 3px;
 }
 
-/* UNDERLINE EFFECT */
+
 .nav-links a::after,
 .right-section a::after {
   content: "";
@@ -65,7 +64,7 @@
   transition: transform 0.35s ease;
 }
 
-/* HOVER */
+
 .nav-links a:hover,
 .right-section a:hover {
   color: var(--accent);
@@ -76,14 +75,13 @@
   transform: scaleX(1);
 }
 
-/* RIGHT SECTION */
 .right-section {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-/* WELCOME TEXT */
+
 .welcome {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
@@ -91,7 +89,7 @@
   margin-right: 10px;
 }
 
-/* LOGOUT BUTTON */
+
 .logout-btn {
   padding: 6px 14px;
   background-color: var(--accent);
@@ -108,7 +106,7 @@
   background-color: #d64545;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 768px) {
   .nav {
     flex-direction: column;
