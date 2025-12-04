@@ -15,7 +15,7 @@ export default function Header() {
                     <div className="nav-links">
                         <Link to="/">Home</Link>
                         <Link to="/books">Books</Link>
-                        {isAuthenticated && <Link to="/wishlist">Wishlist</Link>}
+                        {isAuthenticated ? (<><Link to="/wishlist">Wishlist</Link>  <Link to="/create">Create</Link></>): ""}
                     </div>
                 </div>
 

@@ -4,6 +4,7 @@ import Home from "./components/home/Home.jsx";
 import Books from "./components/books-page/dashboard/Dashboard.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
+import CreateBook from "./components/createBook/CreateBook.jsx";
 
 export default function App() {
   return (
@@ -13,8 +14,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books" element={<Books />} />
+       <Route path="/books/bookId/details" element={<Books />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<CreateBook/>}/>
       </Routes>
     </>
   );

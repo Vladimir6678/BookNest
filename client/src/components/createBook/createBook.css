@@ -1,0 +1,90 @@
+.create-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background: #faf6f6;
+  min-height: 80vh;
+}
+
+.create-form {
+  width: 100%;
+  max-width: 550px;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+  animation: fadeIn 0.6s ease-out;
+  border: 2px solid #ffe0e0;
+}
+
+.create-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #871587;
+  font-weight: 700;
+}
+
+.create-form label {
+  font-weight: 600;
+  margin-top: 1rem;
+  display: block;
+  color: #333;
+}
+
+.create-form input,
+.create-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1.5px solid #ffd3d3;
+  background: #fff7f7;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.create-form input:focus,
+.create-form textarea:focus {
+  border-color: #871587;
+  background: white;
+  outline: none;
+  box-shadow: 0 0 8px #ea6bec39;
+}
+
+.create-form textarea {
+  resize: none;
+  height: 120px;
+}
+
+.create-btn {
+  margin-top: 2rem;
+  width: 100%;
+  background: #871587;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 5px 12px rgba(228, 107, 255, 0.3);
+}
+
+.create-btn:hover {
+  background: #871587;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(255, 107, 107, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

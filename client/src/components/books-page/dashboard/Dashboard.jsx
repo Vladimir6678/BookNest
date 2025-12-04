@@ -3,8 +3,11 @@ import ScrollableSection from "../scrollable-component/ScrollableSection.jsx";
 import BookModal from "../BookModal/BookModal.jsx";
 import "./dashboard-styles.css";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router";
 
 export default function Books() {
+  const navigate = useNavigate();
+  const {id} = useParams()
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,14 +16,17 @@ export default function Books() {
   };
 
   const handleBookClick = (book) => {
-    // set your book url here 
     setSelectedBook(book);
     setIsModalOpen(true);
+
+     navigate(`/books/${id}/details`)
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedBook(null);
+
+    navigate('/books')
   };
 
   const books = [
