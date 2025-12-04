@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import UserContext from "../context/UserContext.jsx";
 const baseUrl = 'http://localhost:3030';
 
-export default function useRequest(url, initialState) {
+export default function useFetch(url, initialState) {
     const { user, isAuthenticated } = useContext(UserContext);
     const [data, setData] = useState(initialState);
 

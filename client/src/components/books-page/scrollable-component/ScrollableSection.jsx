@@ -33,7 +33,7 @@ export default function ScrollableSection({
   const renderItem = (item, index) => {
     switch (component) {
       case "BookCard":
-        return <BookCard key={item.id} book={item} onBookClick={onItemClick} />;
+        return <BookCard key={item._id} book={item} onBookClick={onItemClick} />;
       case "AuthorCard":
         return (
           <Authors
@@ -44,7 +44,7 @@ export default function ScrollableSection({
           />
         );
       default:
-        return <BookCard key={index} book={item} onBookClick={onItemClick} />;
+        return <BookCard key={item._id} book={item} onBookClick={onItemClick} />;
     }
   };
 

@@ -1,68 +1,89 @@
-import { useState } from "react";
 import "./createBook.css";
+import InputField from "../input/InputField.jsx";
+import useForm from "../../hooks/useForm.js";
+import { useNavigate } from "react-router";
+import useFetch from "../../hooks/useFetch.js";
 
 export default function CreateBook() {
-  const [values, setValues] = useState({
-    title: "",
-    author: "",
-    description: "",
-    pdfUrl: "",
-  });
+  const navigate = useNavigate();
+  const { request } = useFetch();
 
-  function handleChange(e) {
-    setValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
 
-    if (!values.title || !values.author || !values.description || !values.pdfUrl) {
+  async function handleSubmit(values) {
+    const bookData = values
+
+    if (!bookData.title || !bookData.author || !bookData.genre || !bookData.description || !bookData.imageUrl || !bookData.pdfUrl) {
       return alert("All fields are required!");
     }
 
-    console.log("Submitted book:", values);
-
-    alert("Book created successfully!");
-  }
+    try {
+      await request('/data/books', 'POST', bookData);
+      alert("Book created successfully!");
+      navigate('/books');
+    } catch (err) {
+      alert(err.message)
+    }
+  };
+  const {
+    register,
+    formSubmit,
+  } = useForm(handleSubmit, {
+    title: '',
+    author: '',
+    genre: '',
+    imageUrl: '',
+    description: '',
+    pdfUrl: '',
+  });
 
   return (
     <div className="create-container">
-      <form className="create-form" onSubmit={handleSubmit}>
+      <form className="create-form" action={formSubmit}>
         <h2>Add a New Book</h2>
 
-        <label>Book Title</label>
-        <input
+        <InputField
+          label="Book Title"
           type="text"
-          name="title"
           placeholder="Enter book title"
-          value={values.title}
-          onChange={handleChange}
+          {...register("title")}
         />
 
-        <label>Author</label>
-        <input
+        <InputField
+          label="Author"
           type="text"
-          name="author"
-          placeholder="Enter author's name"
-          value={values.author}
-          onChange={handleChange}
+          placeholder="Author's name"
+          {...register("author")}
         />
 
-        <label>Description</label>
-        <textarea
-          name="description"
-          placeholder="Short summary of the book"
-          value={values.description}
-          onChange={handleChange}
-        ></textarea>
-
-        <label>PDF File URL</label>
-        <input
+        <InputField
+          label="Genre"
           type="text"
-          name="pdfUrl"
+          placeholder="Genre"
+          {...register("genre")}
+
+        />
+
+        <InputField
+          label="Image URL"
+          type="text"
+          placeholder="URL of the book cover"
+          {...register("imageUrl")}
+        />
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            placeholder="Short summary of the book"
+            {...register("description")}
+          ></textarea>
+        </div>
+
+        <InputField
+          label="PDF File URL"
+          type="text"
           placeholder="Paste a PDF link here"
-          value={values.pdfUrl}
-          onChange={handleChange}
+          {...register("pdfUrl")}
         />
 
         <button type="submit" className="create-btn">Create Book</button>
