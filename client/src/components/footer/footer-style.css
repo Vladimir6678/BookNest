@@ -1,58 +1,76 @@
-footer#foot-section {
+
+#foot-section {
+  background: var(--card); 
+  padding: 40px 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 30px;
-  background-color: #f5ebe9;
-
-  h1#foot-title {
-    font-size: 3.5em;
-    font-style: normal;
-    color: white;
-  }
-
-  div.foot-invoices {
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    gap: 30px;
-
-    h2 {
-      color: white;
-      font-size: 2.5em;
-      font-style: normal;
-    }
-
-    hgroup.links-section {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      gap: 30px;
-
-      h3 {
-        a {
-          display: block;
-          color: white;
-          font-size: clamp(1.4em, 1.6em, 2em);
-          text-decoration: none;
-        }
-      }
-    }
-  }
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
 }
 
-@media (min-width: 1230px) {
-  footer#foot-section {
-    flex-direction: row;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: space-evenly;
+.footer-bottom {
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
 
-    h1#foot-title {
-      font-size: 6.5em;
-      font-style: normal;
-      color: white;
-    }
+.footer-bottom p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+
+#foot-title {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.foot-invoices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 150px;
+}
+
+.foot-invoices h2 {
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.links-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.links-section a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.links-section a:hover {
+  color: var(--accent-light);
+  transform: translateX(4px);
+}
+
+.links-section h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  #foot-section {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

@@ -23,11 +23,14 @@ export default function Footer() {
           <h2>Support</h2>
           <hgroup class="links-section">
             <h3>
-              <a href="#">Contact Us</a>
+              <a href="#">Contact Us - (415) 802-7394</a>
             </h3>
             <h3>
               <a href="#">Customer Support</a>
             </h3>
+            <div className="footer-bottom">
+              <p>© {new Date().getFullYear()} BookNest — All rights reserved.</p>
+            </div>
           </hgroup>
         </div>
       </footer>
