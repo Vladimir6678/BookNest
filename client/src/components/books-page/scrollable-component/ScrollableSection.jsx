@@ -30,14 +30,14 @@ export default function ScrollableSection({
     }
   };
 
-  const renderItem = (item, index) => {
+  const renderItem = (item) => {
     switch (component) {
       case "BookCard":
         return <BookCard key={item._id} book={item} onBookClick={onItemClick} />;
       case "AuthorCard":
         return (
           <Authors
-            key={index}
+            key={item._id}
             authorName={item.authorName}
             avatar={item.avatar}
             booksCount={item.booksCount}
@@ -56,7 +56,7 @@ export default function ScrollableSection({
     >
       <h2 className="section-title">{sectionTitle}</h2>
       <div className="scrollable-section" ref={scrollContainerRef}>
-        {data.map((item, index) => renderItem(item, index))}
+        {data.map((item) => renderItem(item))}
       </div>
 
       <button

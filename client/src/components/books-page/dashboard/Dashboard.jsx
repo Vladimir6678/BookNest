@@ -41,9 +41,9 @@ export default function Books() {
           ).values(),
         ];
         setAuthors(uniqueAuthors);
-        alert("Failed to load books.");
+     
       } catch (error) {
-
+               alert("Failed to load books.");
       }
     }
     loadingBooks();
@@ -58,7 +58,7 @@ export default function Books() {
     setSelectedBook(book);
     setIsModalOpen(true);
 
-    navigate(`/books/${books._id}/details`)
+    navigate(`/books/${book._id}/details`)
   };
 
   const handleCloseModal = () => {
