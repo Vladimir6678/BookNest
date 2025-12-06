@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import "./book-modal-styles.css";
 
-export default function BookModal({ book, isOpen, onClose }) {
+export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
   const [isResizing, setIsResizing] = useState(false);
   const [modalHeight, setModalHeight] = useState(0);
   const modalRef = useRef(null);
@@ -47,46 +47,77 @@ export default function BookModal({ book, isOpen, onClose }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div
-        className="modal-content"
-        style={{ height: modalHeight || "50%" }}
-        ref={modalRef}
-      >
-        <div className="drag-area" onMouseDown={handleMouseDown}></div>
-        <button className="close-button" onClick={onClose}>
-          ×
-        </button>
+  <div className="modal-overlay">
+    <div
+      className="modal-content"
+      style={{ height: modalHeight || "50%" }}
+      ref={modalRef}
+    >
+      <div className="drag-area" onMouseDown={handleMouseDown}></div>
 
-        <div className="modal-body">
-          <div className="modal-image">
-            <img
-              src={`${book.imageUrl}`}
-              
-             
-              alt={`${book.title} Cover`}
-            />
-          </div>
+      <button className="close-button" onClick={onClose}>×</button>
 
-          <div className="modal-details">
-            <h2>{book.title}</h2>
-            <p className="author">by {book.author}</p>
-            {book.genre && <p className="genre">Genre: {book.genre}</p>}
-           
-            {book.rating && (
-              <div className="rating">
-                Rating: {"★".repeat(book.rating)}
-                {"☆".repeat(5 - book.rating)}
-              </div>
+      <div className="modal-body">
+  
+        <div className="modal-image">
+          <img
+            src={book.imageUrl}
+            alt={`${book.title} Cover`}
+          />
+        </div>
+
+     
+        <div className="modal-details">
+          <h2>{book.title}</h2>
+          <p className="author">by {book.author}</p>
+          {book.genre && <p className="genre">Genre: {book.genre}</p>}
+
+          {book.rating && (
+            <div className="rating">
+              Rating: {"★".repeat(book.rating)}
+              {"☆".repeat(5 - book.rating)}
+            </div>
+          )}
+
+          {book.description && (
+            <p className="description">{book.description}</p>
+          )}
+          {book.pages && <p className="pages">Pages: {book.pages}</p>}
+          {book.isbn && <p className="isbn">ISBN: {book.isbn}</p>}
+
+        {isOwner && (<div className="modal-actions">
+            <button className="edit-btn">Edit</button>
+            <button className="delete-btn">Delete</button>
+          </div>)}
+          
+
+           {isAuth && (
+              <>
+                <div className="rating-input-section">
+                  <h3>Your Rating</h3>
+                  <div className="star-input">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span key={star} className="star">
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="comment-section">
+                  <h3>Your Comment</h3>
+                  <textarea
+                    placeholder="Write your thoughts about this book…"
+                    className="comment-box"
+                  ></textarea>
+                  <button className="submit-comment-btn">Submit</button>
+                </div>
+              </>
             )}
-            {book.description && (
-              <p className="description">{book.description}</p>
-            )}
-            {book.pages && <p className="pages">Pages: {book.pages}</p>}
-            {book.isbn && <p className="isbn">ISBN: {book.isbn}</p>}
-          </div>
+
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

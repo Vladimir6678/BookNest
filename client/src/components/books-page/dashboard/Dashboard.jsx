@@ -3,14 +3,15 @@ import ScrollableSection from "../scrollable-component/ScrollableSection.jsx";
 import BookModal from "../BookModal/BookModal.jsx";
 import "./dashboard-styles.css";
 
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
 import useFetch from "../../../hooks/useFetch.js";
+import UserContext from "../../../context/UserContext.jsx";
 
 export default function Books() {
   const navigate = useNavigate();
   const { request } = useFetch();
-  const { id } = useParams();
+  const { user, isAuthenticated} = useContext(UserContext)
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -74,65 +75,65 @@ export default function Books() {
       <main id="main-books-page">
         <article className="filter-site">
           <BookFilter onFilterChange={handleFilterChange} />
-                  {books.length === 0 ? (
-              <p className="no-books-message">
-                Oops! There are no books available at the moment. Check back later!
-              </p>
-            ): <section className="book-grid">
-            <h2>Explore Books</h2>
-          
 
+          {books.length === 0 ? (
+            <p className="no-books-message">
+              Oops! There are no books available at the moment. Check back
+              later!
+            </p>
+          ) : (
+            <section className="book-grid">
+              <h2>Explore Books</h2>
 
-            <div className="search-controls">
-              <input
-                type="text"
-                placeholder="Search by title, author, or genre"
-                className="search-bar"
-              />
+              <div className="search-controls">
+                <input
+                  type="text"
+                  placeholder="Search by title, author, or genre"
+                  className="search-bar"
+                />
 
-              <select
-                className="view-select"
-                value={selectedView}
-                onChange={(e) => setSelectedView(e.target.value)}
-              >
-                <option value="default">Default View</option>
-                <option value="all">All Books</option>
-              </select>
-            </div>
+                <select
+                  className="view-select"
+                  value={selectedView}
+                  onChange={(e) => setSelectedView(e.target.value)}
+                >
+                  <option value="default">Default View</option>
+                  <option value="all">All Books</option>
+                </select>
+              </div>
 
+              {selectedView === "default" ? (
+                <>
+                  <ScrollableSection
+                    sectionTitle="Most Popular Books"
+                    data={books}
+                    component="BookCard"
+                    onItemClick={handleBookClick}
+                  />
 
-            {selectedView === "default" ? (
-              <>
+                  <ScrollableSection
+                    sectionTitle="New Book Arrivals"
+                    data={latest}
+                    component="BookCard"
+                    onItemClick={handleBookClick}
+                  />
+
+                  <ScrollableSection
+                    sectionTitle="Authors"
+                    data={authors}
+                    component="AuthorCard"
+                  />
+                </>
+              ) : (
                 <ScrollableSection
-                  sectionTitle="Most Popular Books"
+                  sectionTitle="All Books"
                   data={books}
                   component="BookCard"
                   onItemClick={handleBookClick}
-                  />
-
-                <ScrollableSection
-                  sectionTitle="New Book Arrivals"
-                  data={latest}
-                  component="BookCard"
-                  onItemClick={handleBookClick}
                 />
-
-                <ScrollableSection
-                  sectionTitle="Authors"
-                  data={authors}
-                  component="AuthorCard"
-                />
-              </>
-            ) : (
-              <ScrollableSection
-                sectionTitle="All Books"
-                data={books}
-                component="BookCard"
-                onItemClick={handleBookClick}
-              />
-            )}
-          </section>}
-        
+              )}
+            </section>
+          )}
         </article>
       </main>
 
@@ -140,6 +141,8 @@ export default function Books() {
         book={selectedBook}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        isOwner={selectedBook?._ownerId === user?._id}
+        isAuth={isAuthenticated}
       />
     </>
   );
