@@ -1,32 +1,33 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import useFetch from "../hooks/useFetch.js";
-import UserContext from "./UserContext";
 
 const CommentContext = createContext({
   comments: [],
-  getAllComments: () => {},
-  addComment: () => {},
-  deleteComment: () => {},
+  getAllComments: async () => {},
+  addComment: async () => {},
+  deleteComment: async () => {},
 });
 
 export function CommentProvider({ children }) {
   const { request } = useFetch();
   const [comments, setComments] = useState([]);
-  const { user } = useContext(UserContext); 
 
+ 
   const getAllComments = async (bookId) => {
     try {
-      const result = await request(
-        `/data/comments?where=bookId=${bookId}&sortBy=_createdOn%20desc`,
-        "GET"
-      );
+      const url = `/data/comments?where=${encodeURIComponent(
+        `bookId="${bookId}"`
+      )}&sortBy=_createdOn%20desc`;
+      const result = await request(url, "GET");
       setComments(result);
     } catch (err) {
-      alert("Failed to fetch comments: " + err.message);
+      console.error("Failed to fetch comments:", err);
+      alert("Failed to fetch comments: " + (err.message || err));
     }
   };
 
-  const addComment = async (bookId, message) => {
+
+  const addComment = async (bookId, message, user) => {
     if (!user) {
       alert("You must be logged in to comment!");
       return null;
@@ -40,29 +41,36 @@ export function CommentProvider({ children }) {
           bookId,
           message,
           _ownerId: user._id,
-          username: user.username
+          username: user.username,
         },
-        { Authorization: `Bearer ${user.accessToken}` } 
+        {
+          Authorization: `Bearer ${user.accessToken}`,
+        }
       );
-
-   
       setComments((prev) => [newComment, ...prev]);
       return newComment;
     } catch (err) {
-      alert("Failed to add comment: " + err.message);
+      console.error("Failed to add comment:", err);
+      alert("Failed to add comment: " + (err.message || err));
       return null;
     }
   };
 
-  const deleteComment = async (commentId) => {
+ 
+  const deleteComment = async (commentId, user) => {
+    if (!user) {
+      alert("You must be logged in to delete a comment!");
+      return;
+    }
+
     try {
       await request(`/data/comments/${commentId}`, "DELETE", null, {
-        Authorization: `Bearer ${user?.accessToken}`,
+        Authorization: `Bearer ${user.accessToken}`,
       });
-
       setComments((prev) => prev.filter((c) => c._id !== commentId));
     } catch (err) {
-      alert("Failed to delete comment: " + err.message);
+      console.error("Failed to delete comment:", err);
+      alert("Failed to delete comment: " + (err.message || err));
     }
   };
 

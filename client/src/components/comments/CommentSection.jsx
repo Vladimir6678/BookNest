@@ -26,7 +26,7 @@ export default function CommentSection() {
   const handleSubmit = async () => {
     if (!message.trim()) return;
 
-    const created = await addComment(bookId, message);
+    const created = await addComment(bookId, message, user);
 
     if (created) setMessage(""); 
   };
@@ -70,7 +70,7 @@ export default function CommentSection() {
               {isAuthenticated && comment._ownerId === user?._id && (
                 <button
                   className="delete-comment-btn"
-                  onClick={() => deleteComment(comment._id)}
+                  onClick={() => deleteComment(comment._id, user)}
                 >
                   Delete
                 </button>
@@ -82,4 +82,3 @@ export default function CommentSection() {
     </div>
   );
 }
-
