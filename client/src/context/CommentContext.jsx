@@ -12,12 +12,12 @@ const CommentContext = createContext({
 export function CommentProvider({ children }) {
   const { request } = useFetch();
   const [comments, setComments] = useState([]);
-  const { user } = useContext(UserContext); // use logged-in user
+  const { user } = useContext(UserContext); 
 
   const getAllComments = async (bookId) => {
     try {
       const result = await request(
-        `/data/comments?where=bookId="${bookId}"&sortBy=_createdOn%20desc`,
+        `/data/comments?where=bookId=${bookId}&sortBy=_createdOn%20desc`,
         "GET"
       );
       setComments(result);
@@ -42,10 +42,10 @@ export function CommentProvider({ children }) {
           _ownerId: user._id,
           username: user.username
         },
-        { Authorization: `Bearer ${user.accessToken}` } // attach token if required
+        { Authorization: `Bearer ${user.accessToken}` } 
       );
 
-      // Update comments immediately
+   
       setComments((prev) => [newComment, ...prev]);
       return newComment;
     } catch (err) {

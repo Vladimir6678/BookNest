@@ -13,7 +13,7 @@ export default function CommentSection() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Load comments when book changes
+ 
   useEffect(() => {
     async function loadComments() {
       setLoading(true);
@@ -28,7 +28,7 @@ export default function CommentSection() {
 
     const created = await addComment(bookId, message);
 
-    if (created) setMessage(""); // clear input immediately
+    if (created) setMessage(""); 
   };
 
   return (
