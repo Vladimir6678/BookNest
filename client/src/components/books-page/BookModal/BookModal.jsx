@@ -1,12 +1,26 @@
 import { useState, useRef } from "react";
 import "./book-modal-styles.css";
+import useFetch from "../../../hooks/useFetch.js";
+import { Link, useParams } from "react-router";
 
 export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
+  const {request} = useFetch;
+  const {bookId} = useParams();
   const [isResizing, setIsResizing] = useState(false);
   const [modalHeight, setModalHeight] = useState(0);
   const modalRef = useRef(null);
   const startYRef = useRef(0);
   const startHeightRef = useRef(0);
+
+  const deleteBook = async ()=> {
+    try {
+
+      await request(`/data/books/${bookId}`, 'DELETE')
+      
+    } catch (error) {
+      alert('Can not delete the book :', error.message)
+    }
+  }
 
   if (!isOpen || !book) return null;
 
@@ -86,8 +100,8 @@ export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
           {book.isbn && <p className="isbn">ISBN: {book.isbn}</p>}
 
         {isOwner && (<div className="modal-actions">
-            <button className="edit-btn">Edit</button>
-            <button className="delete-btn">Delete</button>
+            <button className="edit-btn"><Link to={`/books/${bookId}/edit`}>Edit</Link></button>
+            <button lassName="delete-btn"  onClick={deleteBook}>Delete</button>
           </div>)}
           
 

@@ -9,7 +9,7 @@ import CreateBook from "./components/createBook/CreateBook.jsx";
 export default function App() {
   return (
     <>
-      <Header />
+      <Header>
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,6 +19,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<CreateBook/>}/>
       </Routes>
+      </Header>
     </>
   );
 }
