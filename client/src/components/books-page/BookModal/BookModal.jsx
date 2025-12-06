@@ -2,21 +2,22 @@ import { useState, useRef } from "react";
 import "./book-modal-styles.css";
 import useFetch from "../../../hooks/useFetch.js";
 import { Link, useParams } from "react-router";
+import CommentSection from "../../comments/CommentSection.jsx";
 
 export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
-  const {request} = useFetch;
-  const {bookId} = useParams();
+  const { request } = useFetch;
+  const { bookId } = useParams();
   const [isResizing, setIsResizing] = useState(false);
   const [modalHeight, setModalHeight] = useState(0);
   const modalRef = useRef(null);
   const startYRef = useRef(0);
   const startHeightRef = useRef(0);
 
-  const deleteBook = async ()=> {
+  const deleteBook = async () => {
     try {
 
       await request(`/data/books/${bookId}`, 'DELETE')
-      
+
     } catch (error) {
       alert('Can not delete the book :', error.message)
     }
@@ -61,77 +62,53 @@ export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
   };
 
   return (
-  <div className="modal-overlay">
-    <div
-      className="modal-content"
-      style={{ height: modalHeight || "50%" }}
-      ref={modalRef}
-    >
-      <div className="drag-area" onMouseDown={handleMouseDown}></div>
+    <div className="modal-overlay">
+      <div
+        className="modal-content"
+        style={{ height: modalHeight || "50%" }}
+        ref={modalRef}
+      >
+        <div className="drag-area" onMouseDown={handleMouseDown}></div>
 
-      <button className="close-button" onClick={onClose}>×</button>
+        <button className="close-button" onClick={onClose}>×</button>
 
-      <div className="modal-body">
-  
-        <div className="modal-image">
-          <img
-            src={book.imageUrl}
-            alt={`${book.title} Cover`}
-          />
-        </div>
+        <div className="modal-body">
 
-     
-        <div className="modal-details">
-          <h2>{book.title}</h2>
-          <p className="author">by {book.author}</p>
-          {book.genre && <p className="genre">Genre: {book.genre}</p>}
+          <div className="modal-image">
+            <img
+              src={book.imageUrl}
+              alt={`${book.title} Cover`}
+            />
+          </div>
 
-          {book.rating && (
-            <div className="rating">
-              Rating: {"★".repeat(book.rating)}
-              {"☆".repeat(5 - book.rating)}
-            </div>
-          )}
 
-          {book.description && (
-            <p className="description">{book.description}</p>
-          )}
-          {book.pages && <p className="pages">Pages: {book.pages}</p>}
-          {book.isbn && <p className="isbn">ISBN: {book.isbn}</p>}
+          <div className="modal-details">
+            <h2>{book.title}</h2>
+            <p className="author">by {book.author}</p>
+            {book.genre && <p className="genre">Genre: {book.genre}</p>}
 
-        {isOwner && (<div className="modal-actions">
-            <button className="edit-btn"><Link to={`/books/${bookId}/edit`}>Edit</Link></button>
-            <button lassName="delete-btn"  onClick={deleteBook}>Delete</button>
-          </div>)}
-          
-
-           {isAuth && (
-              <>
-                <div className="rating-input-section">
-                  <h3>Your Rating</h3>
-                  <div className="star-input">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <span key={star} className="star">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="comment-section">
-                  <h3>Your Comment</h3>
-                  <textarea
-                    placeholder="Write your thoughts about this book…"
-                    className="comment-box"
-                  ></textarea>
-                  <button className="submit-comment-btn">Submit</button>
-                </div>
-              </>
+            {book.rating && (
+              <div className="rating">
+                Rating: {"★".repeat(book.rating)}
+                {"☆".repeat(5 - book.rating)}
+              </div>
             )}
 
+            {book.description && (
+              <p className="description">{book.description}</p>
+            )}
+            {book.pages && <p className="pages">Pages: {book.pages}</p>}
+            {book.isbn && <p className="isbn">ISBN: {book.isbn}</p>}
+
+            {isOwner && (<div className="modal-actions">
+              <button className="edit-btn"><Link to={`/books/${bookId}/edit`}>Edit</Link></button>
+              <button lassName="delete-btn" onClick={deleteBook}>Delete</button>
+            </div>)}
+
+            <CommentSection isAuth={isAuth} />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }

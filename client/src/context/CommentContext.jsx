@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch.js";
+import UserContext from "./UserContext";
 
 const CommentContext = createContext({
   comments: [],
@@ -11,6 +12,7 @@ const CommentContext = createContext({
 export function CommentProvider({ children }) {
   const { request } = useFetch();
   const [comments, setComments] = useState([]);
+  const { user } = useContext(UserContext); // use logged-in user
 
   const getAllComments = async (bookId) => {
     try {
@@ -25,8 +27,25 @@ export function CommentProvider({ children }) {
   };
 
   const addComment = async (bookId, message) => {
+    if (!user) {
+      alert("You must be logged in to comment!");
+      return null;
+    }
+
     try {
-      const newComment = await request("/data/comments", "POST", { bookId, message });
+      const newComment = await request(
+        "/data/comments",
+        "POST",
+        {
+          bookId,
+          message,
+          _ownerId: user._id,
+          username: user.username
+        },
+        { Authorization: `Bearer ${user.accessToken}` } // attach token if required
+      );
+
+      // Update comments immediately
       setComments((prev) => [newComment, ...prev]);
       return newComment;
     } catch (err) {
@@ -37,7 +56,10 @@ export function CommentProvider({ children }) {
 
   const deleteComment = async (commentId) => {
     try {
-      await request(`/data/comments/${commentId}`, "DELETE");
+      await request(`/data/comments/${commentId}`, "DELETE", null, {
+        Authorization: `Bearer ${user?.accessToken}`,
+      });
+
       setComments((prev) => prev.filter((c) => c._id !== commentId));
     } catch (err) {
       alert("Failed to delete comment: " + err.message);
@@ -57,6 +79,5 @@ export function CommentProvider({ children }) {
     </CommentContext.Provider>
   );
 }
-
 
 export default CommentContext;
