@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import  InputField from "../input
+import  InputField from "../input/InputField.jsx";
 import { Link } from "react-router";
 import "./register.css";
 import UserContext from "../../context/UserContext.jsx";
