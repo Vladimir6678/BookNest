@@ -1,70 +1,60 @@
-import { useEffect } from "react";
-import useForm from "../../hooks/useForm.js";
+import { useState, useContext } from "react";
 import useFetch from "../../hooks/useFetch.js";
 import UserContext from "../../context/UserContext.jsx";
-import { useContext } from "react";
-import "./rating.css"; 
+import "./rating.css";
 
-
-export default function Rating({ book, setBook }) {
+function Rating({ book, onUpdate }) {
+  const [rating, setRating] = useState(book.rating || 0);
   const { request } = useFetch();
   const { user } = useContext(UserContext);
 
-  const { values, register, setValues, formSubmit } = useForm(
-    async (formData) => {
-      if (!user) return alert("Please log in to rate the book.");
+  const handleRate = async (newRating) => {
+    const oldAvg = book.rating || 0;
+    const count = book.ratingCount || 0;
 
-      try {
-        const updatedBook = {
-          ...book,
-          rating: formData.rating,
-          ratingCount: (book.ratingCount || 0) + 1,
-        };
+    const newAvg = (oldAvg * count + newRating) / (count + 1);
 
-        const res = await request(
-          `/data/books/${book._id}`,
-          "PUT",
-          updatedBook,
-          { Authorization: `Bearer ${user.accessToken}` }
-        );
+    const updatedBook = {
+      ...book,
+      rating: newAvg,
+      ratingCount: count + 1,
+    };
 
-        if (setBook) setBook(res);
-      } catch (err) {
-        console.error(err);
-        alert("Failed to submit rating: " + err.message);
-      }
-    },
-    { rating: book.rating || 0 }
-  );
+    setRating(newAvg);
 
-  useEffect(() => {
-    setValues({ rating: book.rating || 0 });
-  }, [book, setValues]);
+    if (user?.accessToken) {
+      await request(
+        `/data/books/${book._id}`,
+        "PUT",
+        updatedBook,
+        { Authorization: `Bearer ${user.accessToken}` }
+      );
+    }
 
-  const handleStarClick = (star) => {
-    register("rating").onChange({ target: { name: "rating", value: star } });
-    formSubmit();
+    onUpdate(updatedBook);
   };
 
   return (
-    <div className="rating-container">
-      <div className="stars">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span
-            key={star}
-            onClick={() => handleStarClick(star)}
-            className={`star ${values.rating >= star ? "active" : ""} ${
-              !user ? "disabled" : ""
-            }`}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-      <p className="rating-info">
-        Rating: {values.rating} / 5 ({book.ratingCount || 0} ratings)
-      </p>
-    </div>
+    <>
+     <p className="rating-title">Book Rating</p>
+
+<div className="rating-stars">
+  {[1, 2, 3, 4, 5].map((n) => (
+    <span
+      key={n}
+      className={`star ${rating >= n ? "filled" : ""}`}
+      onClick={() => handleRate(n)}
+    >
+      ★
+    </span>
+  ))}
+  <span className="rating-number">{rating.toFixed(1)}</span>
+</div>
+    </>
+    
   );
 }
+
+export default Rating;
+
 

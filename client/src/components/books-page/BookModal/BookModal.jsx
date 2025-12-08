@@ -6,7 +6,7 @@ import CommentSection from "../../comments/CommentSection.jsx";
 import UserContext from "../../../context/UserContext";
 import Rating from "../../ratings/Rating.jsx";
 
-export default function BookModal({ book, isOpen, setBook, onClose, isOwner, isAuth }) {
+export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, isOwner, isAuth }) {
   const { request } = useFetch();
     const navigate = useNavigate();
   const { bookId } = useParams();
@@ -100,7 +100,7 @@ export default function BookModal({ book, isOpen, setBook, onClose, isOwner, isA
                 </button>
               </div>
             )}
-                 <Rating book={book} onUpdate={setBook} />
+                 <Rating book={book} onUpdate={onUpdate} />
             <CommentSection isAuth={isAuth} />
           </div>
         </div>

@@ -12,7 +12,7 @@ import UserContext from "../../../context/UserContext.jsx";
 export default function Books() {
   const navigate = useNavigate();
   const { request } = useFetch();
-  const { user, isAuthenticated} = useContext(UserContext)
+  const { user, isAuthenticated } = useContext(UserContext)
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -46,14 +46,28 @@ export default function Books() {
           ).values(),
         ];
         setAuthors(uniqueAuthors);
-     
+
       } catch (error) {
-               alert("Failed to load books.");
+        alert("Failed to load books.");
       }
     }
     loadingBooks();
 
   }, [])
+
+  const handleRatingUpdate = (updatedBook) => {
+
+    const updatedBooks = books.map(b =>
+      b._id === updatedBook._id ? updatedBook : b
+    );
+
+    setBooks(updatedBooks);
+
+    const trending = getTrendingBooks(updatedBooks);
+    setPopular(trending);
+    setSelectedBook(updatedBook);
+  };
+
 
   const handleFilterChange = (selectedGenres) => {
     console.log("Selected genres:", selectedGenres);
@@ -144,6 +158,7 @@ export default function Books() {
       <BookModal
         book={selectedBook}
         isOpen={isModalOpen}
+        onUpdate={handleRatingUpdate}
         setBook={setSelectedBook}
         onClose={handleCloseModal}
         isOwner={selectedBook?._ownerId === user?._id}
