@@ -5,6 +5,7 @@ import Books from "./components/books-page/dashboard/Dashboard.jsx";
 import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import CreateBook from "./components/createBook/CreateBook.jsx";
+import WishList from "./components/wishlist/WishList.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<CreateBook/>}/>
+        <Route path="/wishlist" element={<WishList/>}></Route>
+      
       </Routes>
      
     </>
