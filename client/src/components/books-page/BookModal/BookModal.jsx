@@ -80,9 +80,11 @@ export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, is
 
             {isOwner && (
               <div className="modal-actions">
-                <button className="edit-btn">
-                  <Link to={`/books/${book._id}/edit`}>Edit</Link>
-                </button>
+
+                <Link to={`/books/${book._id}/edit`} className="edit-btn">
+                  Edit
+                </Link>
+
                 <button className="delete-btn" onClick={deleteBook}>Delete</button>
               </div>
             )}

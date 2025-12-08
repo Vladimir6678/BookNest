@@ -6,6 +6,7 @@ import Login from "./components/login/Login.jsx";
 import Register from "./components/register/Register.jsx";
 import CreateBook from "./components/createBook/CreateBook.jsx";
 import WishList from "./components/wishlist/WishList.jsx";
+import EditBook from "./components/edit-book/EditBook.jsx";
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<CreateBook/>}/>
-        <Route path="/wishlist" element={<WishList/>}></Route>
+        <Route path="/wishlist" element={<WishList/>}/>
+        <Route path="/books/:bookId/edit" element={<EditBook />}/>
       
       </Routes>
      

@@ -1,0 +1,38 @@
+[33mb204db0[m[33m ([m[1;36mHEAD[m[33m)[m HEAD@{0}: commit: add wishlist
+[33m4505273[m HEAD@{1}: commit: Add WishLIst page and styles
+[33m9e0f49b[m HEAD@{2}: commit: optimized modal, comments and ratings css styles and add a photo preview show when you create book
+[33m7c0d4ea[m HEAD@{3}: commit: add dynamic filter on the most popular book section depends on their ratings
+[33mf9f6b39[m HEAD@{4}: commit: add dynamic review componet, make the math logic and persisted the result of the rating for every book
+[33mb0a9d93[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mrestore-branch[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from restore-branch to b0a9d9361bcc4581f45079b9335c525388c66aa0
+[33mb0a9d93[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mrestore-branch[m[33m, [m[1;32mmain[m[33m)[m HEAD@{6}: checkout: moving from b0a9d9361bcc4581f45079b9335c525388c66aa0 to restore-branch
+[33mb0a9d93[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mrestore-branch[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from main to b0a9d9361bcc4581f45079b9335c525388c66aa0
+[33mb0a9d93[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mrestore-branch[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: commit: fix delete button in the modal and fix comments add functionality
+[33m0407c4c[m HEAD@{9}: commit: fixes
+[33m6875dce[m HEAD@{10}: commit: fixes
+[33mb9ac225[m HEAD@{11}: commit: Make comment Context and comment section and styled it
+[33m31b3113[m HEAD@{12}: commit: fixes
+[33mcf04a1b[m HEAD@{13}: merge recovered-commit: Merge made by the 'ort' strategy.
+[33m6262ff9[m HEAD@{14}: checkout: moving from recovered-commit to main
+[33m82fe982[m[33m ([m[1;32mrecovered-commit[m[33m)[m HEAD@{15}: checkout: moving from main to recovered-commit
+[33m6262ff9[m HEAD@{16}: commit: Save current work before switching branch
+[33meb45f74[m HEAD@{17}: reset: moving to HEAD
+[33meb45f74[m HEAD@{18}: commit: Make comments and review section for auth users and edit and delete buttons for the creator of the book
+[33m64c1073[m HEAD@{19}: commit: optimize footer css
+[33md018ff7[m HEAD@{20}: commit: Make the dashboard URL dynamically change when clicking on a book and open the book's detail modal andinserting it's id in the URL
+[33mef10330[m HEAD@{21}: commit: Make logic for create page and sent the newly created books to the server then show it on the dashboard, make dropdown for diffrent visualities
+[33mcaff7ee[m HEAD@{22}: commit: Make when modal is open to put the book id in URL, Make create page and styled it
+[33m2c528f1[m HEAD@{23}: commit: connect register to the server and make the logic
+[33m5a07321[m HEAD@{24}: commit: Style Login form, add link to register if dont have account and make animation for Hero section
+[33m48a1c95[m HEAD@{25}: commit: Styled Register form and add Link to Login if already registered
+[33m2b9f498[m HEAD@{26}: commit: Optimize Css and Html on Header and Hero component
+[33m0fc8488[m HEAD@{27}: commit: optmize components
+[33m9654422[m HEAD@{28}: commit: custom hook for controlled forms and Login logic
+[33m853b9f5[m HEAD@{29}: commit: Make UserContent to be able to recieve information anywhere for the user actions
+[33m360d9c5[m HEAD@{30}: commit: Make custom hook for requests
+[33md50f42c[m HEAD@{31}: commit: Make client folder and added SoftUni server
+[33m523730f[m HEAD@{32}: commit: Add SoftUni practice server and start it
+[33m8d07437[m HEAD@{33}: commit: Add SoftUni practice server and start it
+[33m75a518d[m HEAD@{34}: pull: Fast-forward
+[33m09b0356[m HEAD@{35}: commit: Refactor Header and Hero sections css styles
+[33mbb0cd7d[m HEAD@{36}: commit: Style header component and Hero component
+[33m6ed559c[m HEAD@{37}: commit (initial): Initial commit : project foundation
