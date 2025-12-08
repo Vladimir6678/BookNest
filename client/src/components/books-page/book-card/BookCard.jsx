@@ -8,7 +8,7 @@ export default function BookCard({ book, onBookClick }) {
   return (
     <article className="card" onClick={handleClick}>
       <img
-        src={book.cover || "src/assets/images/atomic-habits-book-cover.jpg"}
+        src={book.imageUrl}
         alt={`${book.title} Cover`}
       />
       <div className="book-info">

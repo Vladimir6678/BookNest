@@ -32,7 +32,7 @@ export default function Books() {
         setBooks(result);
         setLatest(result.slice(-7).reverse());
         const trending = getTrendingBooks(result, 5);
-        setPopular(trending)
+        setPopular(trending.slice(-7).reverse());
 
         const uniqueAuthors = [
           ...new Map(

@@ -81,7 +81,7 @@ export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, is
 
         <div className="modal-body">
           <div className="modal-image">
-            <img src={book.imgUrl} alt={`${book.title} Cover`} />
+            <img src={book.imageUrl} alt={`${book.title} Cover`} />
           </div>
 
           <div className="modal-details">
