@@ -1,6 +1,7 @@
 import BookFilter from "../book-filter-component/BookFilter.jsx";
 import ScrollableSection from "../scrollable-component/ScrollableSection.jsx";
 import BookModal from "../BookModal/BookModal.jsx";
+import { getTrendingBooks } from "../../../../utills/getTrendingBooks.js";
 import "./dashboard-styles.css";
 
 import { useState, useEffect, useContext } from "react";
@@ -15,6 +16,7 @@ export default function Books() {
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
+  const [popular, setPopular] = useState([]);
   const [authors, setAuthors] = useState([]);
 
   const [selectedView, setSelectedView] = useState("default")
@@ -28,7 +30,9 @@ export default function Books() {
       try {
         const result = await request("/data/books", "GET");
         setBooks(result);
-        setLatest(result.slice(7));
+        setLatest(result.slice(-7).reverse());
+        const trending = getTrendingBooks(result, 5);
+        setPopular(trending)
 
         const uniqueAuthors = [
           ...new Map(
@@ -106,7 +110,7 @@ export default function Books() {
                 <>
                   <ScrollableSection
                     sectionTitle="Most Popular Books"
-                    data={books}
+                    data={popular}
                     component="BookCard"
                     onItemClick={handleBookClick}
                   />
@@ -140,6 +144,7 @@ export default function Books() {
       <BookModal
         book={selectedBook}
         isOpen={isModalOpen}
+        setBook={setSelectedBook}
         onClose={handleCloseModal}
         isOwner={selectedBook?._ownerId === user?._id}
         isAuth={isAuthenticated}

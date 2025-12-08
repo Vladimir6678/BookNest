@@ -1,0 +1,34 @@
+.rating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.star {
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.active {
+  color: #ffd700;
+}
+
+.star.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.rating-info {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+}

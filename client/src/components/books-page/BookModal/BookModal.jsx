@@ -4,8 +4,9 @@ import "./book-modal-styles.css";
 import useFetch from "../../../hooks/useFetch.js";
 import CommentSection from "../../comments/CommentSection.jsx";
 import UserContext from "../../../context/UserContext";
+import Rating from "../../ratings/Rating.jsx";
 
-export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
+export default function BookModal({ book, isOpen, setBook, onClose, isOwner, isAuth }) {
   const { request } = useFetch();
     const navigate = useNavigate();
   const { bookId } = useParams();
@@ -99,7 +100,7 @@ export default function BookModal({ book, isOpen, onClose, isOwner, isAuth }) {
                 </button>
               </div>
             )}
-
+                 <Rating book={book} onUpdate={setBook} />
             <CommentSection isAuth={isAuth} />
           </div>
         </div>
