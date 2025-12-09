@@ -9,24 +9,28 @@ import WishList from "./components/wishlist/WishList.jsx";
 import EditBook from "./components/edit-book/EditBook.jsx";
 
 import useWishlist from "./hooks/useWishList.js";
+import { BookModalProvider } from "./context/Modal.Context.jsx";
 
 export default function App() {
   const { wishlist, toggleWishlist } = useWishlist();
 
   return (
     <>
-      <Header />
+      <BookModalProvider>
+        <Header />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/books" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist}/>} />
-        <Route path="/books/:bookId/details" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/create" element={<CreateBook />} />
-        <Route path="/wishlist" element={<WishList wishlist={wishlist} onRemove={toggleWishlist}/> } />
-        <Route path="/books/:bookId/edit" element={<EditBook  wishlist={wishlist} onRemove={toggleWishlist}/>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist} />} />
+          <Route path="/books/:bookId/details" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/create" element={<CreateBook />} />
+          <Route path="/wishlist" element={<WishList wishlist={wishlist} onRemove={toggleWishlist} />} />
+          <Route path="/books/:bookId/edit" element={<EditBook wishlist={wishlist} onRemove={toggleWishlist} />} />
+        </Routes>
+      </BookModalProvider>
+
     </>
   );
 }
