@@ -8,33 +8,29 @@ import CreateBook from "./components/createBook/CreateBook.jsx";
 import WishList from "./components/wishlist/WishList.jsx";
 import EditBook from "./components/edit-book/EditBook.jsx";
 
-import useWishlist from "./hooks/useWishList.js";
+import { WishlistProvider } from "./context/WishlistContext.jsx";
 import { BookModalProvider } from "./context/ModalContext.jsx";
 
 export default function App() {
-  const { wishlist, toggleWishlist } = useWishlist();
+
 
   return (
     <>
       <BookModalProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/books" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist} />}/>
-           <Route path="/books/:bookId/details" element={<Books />} />
+        <WishlistProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/books/:bookId/details" element={<Books />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/create" element={<CreateBook />} />
+            <Route path="/wishlist"element={<WishList />} />
+            <Route path="/books/:bookId/edit" element={<EditBook />} />
+          </Routes>
+        </WishlistProvider>
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/create" element={<CreateBook />} />
-
-          <Route
-            path="/wishlist"
-            element={<WishList wishlist={wishlist} onRemove={toggleWishlist} />}
-          />
-
-
-          <Route path="/books/:bookId/edit" element={<EditBook />} />
-        </Routes>
       </BookModalProvider>
     </>
   );

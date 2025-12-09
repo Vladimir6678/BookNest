@@ -7,13 +7,15 @@ import { getTrendingBooks } from "../../../../utills/getTrendingBooks.js";
 import useFetch from "../../../hooks/useFetch.js";
 import UserContext from "../../../context/UserContext.jsx";
 import { useBookModal } from "../../../context/ModalContext.jsx";
+import { useWishlistContext } from "../../../context/WishlistContext.jsx";
 import "./dashboard-styles.css";
 
-export default function Books({ wishlist, onToggleWishlist }) {
+export default function Books() {
   const navigate = useNavigate();
   const { request } = useFetch();
   const { user, isAuthenticated } = useContext(UserContext);
   const { selectedBook, openBookModal, closeBookModal } = useBookModal();
+  const { wishlist, toggleWishlist } = useWishlistContext;
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -103,16 +105,16 @@ export default function Books({ wishlist, onToggleWishlist }) {
                     data={popular}
                     component="BookCard"
                     onItemClick={handleBookClick}
-                    wishlist={wishlist} 
-                    onToggleWishlist={onToggleWishlist} 
+                    wishlist={wishlist}
+                    onToggleWishlist={toggleWishlist}
                   />
                   <ScrollableSection
                     sectionTitle="New Book Arrivals"
                     data={latest}
                     component="BookCard"
                     onItemClick={handleBookClick}
-                    wishlist={wishlist} 
-                    onToggleWishlist={onToggleWishlist} 
+                    wishlist={wishlist}
+                    onToggleWishlist={toggleWishlist}
 
                   />
                   <ScrollableSection
@@ -127,8 +129,8 @@ export default function Books({ wishlist, onToggleWishlist }) {
                   data={books}
                   component="BookCard"
                   onItemClick={handleBookClick}
-                  wishlist={wishlist} 
-                    onToggleWishlist={onToggleWishlist} 
+                  wishlist={wishlist}
+                  onToggleWishlist={toggleWishlist}
                 />
               )}
             </section>
@@ -139,7 +141,7 @@ export default function Books({ wishlist, onToggleWishlist }) {
       {selectedBook && (
         <BookModal
           wishlist={wishlist}
-          onWishlistToggle={onToggleWishlist}
+          onWishlistToggle={toggleWishlist}
           onUpdate={handleRatingUpdate}
           isAuth={isAuthenticated}
           isOwner={selectedBook?._ownerId === user?._id}

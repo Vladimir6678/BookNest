@@ -1,24 +1,36 @@
 import { FaHeart } from "react-icons/fa";
+import { useWishlistContext } from "../../../context/WishlistContext.jsx";
+import { useContext } from "react";
+import UserContext from "../../../context/UserContext.jsx";
 
-export default function WishlistButton({ book, wishlist = [], onToggle }) {
-    const isInWishlist = wishlist.some((b) => b._id === book._id);
+
+export default function WishlistButton({ book, style = {} }) { 
+
+    const { wishlist, toggleWishlist } = useWishlistContext();
+    const { user } = useContext(UserContext); 
+    
+
+    const isInWishlist = wishlist.some((w) => w.bookId === book._id);
 
     const handleClick = async (e) => {
+        if (!user) {
+            alert("Please log in to manage your wishlist.");
+            return;
+        }
+
         e.stopPropagation();
-
-      
-        const updatedWishlist = await onToggle(book);
-
-        console.log("Toggled wishlist for book:", book.title);
-        console.log("Updated wishlist:", updatedWishlist.map(b => b.title));
+        
+       
+        await toggleWishlist(book); 
+        
+        
+        console.log(`Toggled wishlist status for book: ${book.title}`); 
     };
 
+    const buttonClassName = `wishlist-button ${isInWishlist ? 'active' : ''}`;
+
     return (
-        <button
-            className={`wishlist-btn ${isInWishlist ? "active" : ""}`}
-            onClick={handleClick}
-            title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
-        >
+        <button className={buttonClassName} onClick={handleClick} style={style}>
             <FaHeart />
         </button>
     );

@@ -8,8 +8,7 @@ export default function ScrollableSection({
   data,
   component = "BookCard",
   onItemClick,
-  wishlist,
-  onToggleWishlist,
+ 
 }) {
   const scrollContainerRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -40,12 +39,11 @@ export default function ScrollableSection({
             key={item._id}
             book={item}
             onClick={() => onItemClick(item)}
-            wishlist={wishlist}
-            onToggleWishlist={onToggleWishlist}
+           
           />
         );
       default:
-        return <BookCard key={item._id} book={item} onBookClick={onItemClick} />;
+        return <BookCard key={item._id} book={item} onClick={() => onItemClick(item)} />;
     }
   };
 

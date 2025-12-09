@@ -8,11 +8,13 @@ import Rating from "../../ratings/Rating.jsx";
 import WishlistButton from "../../wishlist/wishlistButton/WishListButton.jsx";
 import { useBookModal } from "../../../context/ModalContext.jsx";
 
-export default function BookModal({ wishlist, onWishlistToggle, onUpdate, isAuth, isOwner }) {
+export default function BookModal({ onUpdate, isAuth, isOwner, OnClose }) {
   const { request } = useFetch();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const { selectedBook, closeBookModal } = useBookModal();
+
+
 
   const [isResizing, setIsResizing] = useState(false);
   const [modalHeight, setModalHeight] = useState(0);
@@ -82,8 +84,6 @@ export default function BookModal({ wishlist, onWishlistToggle, onUpdate, isAuth
 
             <WishlistButton
               book={book}
-              wishlist={wishlist}
-              onToggle={onWishlistToggle}
               style={{ position: "absolute", top: "12px", right: "12px", zIndex: 10 }}
             />
           </div>
