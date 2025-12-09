@@ -8,23 +8,25 @@ import CreateBook from "./components/createBook/CreateBook.jsx";
 import WishList from "./components/wishlist/WishList.jsx";
 import EditBook from "./components/edit-book/EditBook.jsx";
 
+import useWishlist from "./hooks/useWishList.js";
+
 export default function App() {
+  const { wishlist, toggleWishlist } = useWishlist();
+
   return (
     <>
-      <Header/>
+      <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/books" element={<Books />} />
-       <Route path="/books/:bookId/details" element={<Books />} />
+        <Route path="/books" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist}/>} />
+        <Route path="/books/:bookId/details" element={<Books wishlist={wishlist} onToggleWishlist={toggleWishlist} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/create" element={<CreateBook/>}/>
-        <Route path="/wishlist" element={<WishList/>}/>
-        <Route path="/books/:bookId/edit" element={<EditBook />}/>
-      
+        <Route path="/create" element={<CreateBook />} />
+        <Route path="/wishlist" element={<WishList wishlist={wishlist} onRemove={toggleWishlist}/> } />
+        <Route path="/books/:bookId/edit" element={<EditBook  wishlist={wishlist} onRemove={toggleWishlist}/>} />
       </Routes>
-     
     </>
   );
 }

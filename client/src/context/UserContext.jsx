@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useRequest from "../hooks/useFetch.js";
+import { useNavigate } from "react-router"; 
 
 const UserContext = createContext({
     isAuthenticated: false,
@@ -16,11 +17,18 @@ const UserContext = createContext({
     logoutHandler() { },
 });
 
-export function UserProvider({
-    children,
-}) {
+export function UserProvider({children}) {
+    
+      useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
     const [user, setUser] = useState(null);
     const { request } = useRequest();
+    const navigate = useNavigate();
 
     const registerHandler = async (username, email, password) => {
         const newUser = { username, email, password };
@@ -30,6 +38,7 @@ export function UserProvider({
 
       
         setUser(result);
+        localStorage.setItem("user", JSON.stringify(result)); 
     };
 
     const loginHandler = async (email, password) => {
@@ -38,11 +47,16 @@ export function UserProvider({
         console.log(result);
 
         setUser(result);
+        localStorage.setItem("user", JSON.stringify(result)); 
     };
 
     const logoutHandler = () => {
         return request('/users/logout', 'GET', null, { accessToken: user?.accessToken })
-            .finally(() => setUser(null));
+            .finally(() => {
+            setUser(null);
+            localStorage.removeItem("user");
+            navigate("/");
+        });
     };
 
     const userContextValues = {
@@ -51,6 +65,7 @@ export function UserProvider({
         registerHandler,
         loginHandler,
         logoutHandler,
+        setUser
     };
 
     return (

@@ -9,10 +9,12 @@ import { useNavigate } from "react-router";
 import useFetch from "../../../hooks/useFetch.js";
 import UserContext from "../../../context/UserContext.jsx";
 
-export default function Books() {
+export default function Books({ wishlist, onToggleWishlist }) {
   const navigate = useNavigate();
   const { request } = useFetch();
   const { user, isAuthenticated } = useContext(UserContext);
+
+
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -147,6 +149,8 @@ export default function Books() {
         onClose={handleCloseModal}
         isOwner={selectedBook?._ownerId === user?._id}
         isAuth={isAuthenticated}
+        wishlist={wishlist}
+        onWishlistToggle={onToggleWishlist}
       />
     </>
   );

@@ -5,8 +5,12 @@ import useFetch from "../../../hooks/useFetch.js";
 import CommentSection from "../../comments/CommentSection.jsx";
 import UserContext from "../../../context/UserContext";
 import Rating from "../../ratings/Rating.jsx";
+import WishlistButton from "../../wishlist/wishlistButton/WishListButton.jsx";
 
-export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, isOwner, isAuth }) {
+
+
+
+export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, isOwner, isAuth, wishlist = [], onWishlistToggle }) {
   const { request } = useFetch();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
@@ -65,37 +69,59 @@ export default function BookModal({ book, isOpen, onUpdate, setBook, onClose, is
     <div className="modal-overlay">
       <div className="modal-content" style={{ height: modalHeight || "50%" }} ref={modalRef}>
         <div className="drag-area" onMouseDown={handleMouseDown}></div>
-        <button className="close-button" onClick={onClose}>×</button>
+        <button className="close-button" onClick={onClose} > × </button>
 
         <div className="modal-body">
-          <div className="modal-image">
-            <img src={book.imageUrl} alt={`${book.title} Cover`} />
+          <div className="modal-image-wrapper" style={{ position: "relative" }}>
+            <img
+              src={book.imageUrl}
+              alt={`${book.title} Cover`}
+              className="modal-book-image"
+            />
+
+            <WishlistButton
+              book={book}
+              wishlist={wishlist}
+              onToggle={onWishlistToggle}
+              style={{
+                position: "absolute",
+                top: "12px",
+                right: "12px",
+                zIndex: 10,
+              }}
+            />
           </div>
 
-          <div className="modal-details">
-            <h2>{book.title}</h2>
-            <p className="author">by {book.author}</p>
-            <p className="genre">Genre: {book.genre}</p>
-            <p className="description">{book.description}</p>
 
-            {isOwner && (
-              <div className="modal-actions">
 
-                <Link to={`/books/${book._id}/edit`} className="edit-btn">
-                  Edit
-                </Link>
 
-                <button className="delete-btn" onClick={deleteBook}>Delete</button>
-              </div>
-            )}
+        <div className="modal-details">
+          <h2>{book.title}</h2>
+          <p className="author">by {book.author}</p>
+          <p className="genre">Genre: {book.genre}</p>
+          <p className="description">{book.description}</p>
 
-            <Rating book={book} onUpdate={onUpdate} />
-            <CommentSection isAuth={isAuth} />
-          </div>
+          {isOwner && (
+            <div className="modal-actions">
+
+              <Link to={`/books/${book._id}/edit`} className="edit-btn">
+                Edit
+              </Link>
+
+              <button className="delete-btn" onClick={deleteBook}>Delete</button>
+            </div>
+          )}
+
+          <Rating book={book} onUpdate={onUpdate} />
+          <CommentSection isAuth={isAuth} />
+         
         </div>
       </div>
     </div>
+    </div >
+
   );
+
 }
 
 
