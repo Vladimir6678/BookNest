@@ -1,102 +1,102 @@
-article.card {
-  flex: 0 0 auto;
-  height: 50%;
-  width: 200px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-  transition: transform 0.2s;
-  padding: 10px;
-  position: relative;
-  scroll-snap-align: start;
-  .card .image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 250px;
-}
 
-.card .image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
-}
+.book-card {
+ 
+    flex: 0 0 auto;
+    height: 50%; 
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.2s;
+    padding: 10px;
+    position: relative; 
+    cursor: pointer; 
+    scroll-snap-align: start;
 
-
-.wishlist-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-
-  background: rgba(128, 90, 213, 0.85); 
-  border: none;
-  padding: 8px 10px;
-  border-radius: 50px;
-
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  backdrop-filter: blur(6px);
-
-  transition: all 0.25s ease;
-  color: white;
-  font-size: 18px;
-}
-
-.wishlist-btn:hover {
-  transform: scale(1.12);
-  background: rgb(148, 108, 231);
-}
-
-.wishlist-btn.active {
-  background: #d946ef; 
-  transform: scale(1.15);
-}
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-
-  div.book-info {
-    padding: 15px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    transform: translateY(100%);
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-    border-top: 1px solid #f0f0f0;
-
-    h2 {
-      font-size: 1.1rem;
-      margin: 0 0 8px 0;
-      color: #333;
-      font-family: "Roboto", sans-serif;
+    &:hover {
+        transform: translateY(-5px);
     }
 
-    p {
-      font-size: 0.9rem;
-      color: #666;
-      margin: 0;
-      font-family: "Roboto", sans-serif;
+    
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 250px; 
+        overflow: hidden;
     }
-  }
 
-  &:hover div.book-info {
-    transform: translateY(0);
-    opacity: 1;
-  }
+    .book-image { 
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+    
+    
+    .wishlist-btn {
+        position: absolute; 
+        top: 15px; 
+        right: 15px; 
+
+       
+        background: rgba(128, 90, 213, 0.85); 
+        border: none;
+        padding: 8px 10px;
+        border-radius: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+        transition: all 0.25s ease;
+        color: white;
+        font-size: 18px;
+        z-index: 10; 
+    }
+
+    .wishlist-btn:hover {
+        transform: scale(1.12);
+        background: rgb(148, 108, 231);
+    }
+
+    .wishlist-btn.active {
+        background: #d946ef; 
+        transform: scale(1.15);
+    }
+
+  
+    div.book-info {
+        padding: 15px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        transform: translateY(100%); 
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        border-top: 1px solid #f0f0f0;
+        z-index: 5; 
+
+        h3 { 
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            color: #333;
+            font-family: "Roboto", sans-serif;
+        }
+
+        p.author {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+        }
+    }
+
+    &:hover div.book-info {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

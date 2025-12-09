@@ -1,31 +1,28 @@
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
 import BookFilter from "../book-filter-component/BookFilter.jsx";
 import ScrollableSection from "../scrollable-component/ScrollableSection.jsx";
 import BookModal from "../BookModal/BookModal.jsx";
 import { getTrendingBooks } from "../../../../utills/getTrendingBooks.js";
-import "./dashboard-styles.css";
-
-import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router";
 import useFetch from "../../../hooks/useFetch.js";
 import UserContext from "../../../context/UserContext.jsx";
+import { useBookModal } from "../../../context/ModalContext.jsx";
+import "./dashboard-styles.css";
 
 export default function Books({ wishlist, onToggleWishlist }) {
   const navigate = useNavigate();
   const { request } = useFetch();
   const { user, isAuthenticated } = useContext(UserContext);
-
-
+  const { selectedBook, openBookModal, closeBookModal } = useBookModal();
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
   const [popular, setPopular] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [selectedView, setSelectedView] = useState("default");
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    async function loadingBooks() {
+    async function loadBooks() {
       try {
         const result = await request("/data/books", "GET");
         setBooks(result);
@@ -45,11 +42,11 @@ export default function Books({ wishlist, onToggleWishlist }) {
           ).values(),
         ];
         setAuthors(uniqueAuthors);
-      } catch (error) {
+      } catch {
         alert("Failed to load books.");
       }
     }
-    loadingBooks();
+    loadBooks();
   }, [request]);
 
   const handleRatingUpdate = (updatedBook) => {
@@ -58,7 +55,6 @@ export default function Books({ wishlist, onToggleWishlist }) {
     );
     setBooks(updatedBooks);
     setPopular(getTrendingBooks(updatedBooks));
-    setSelectedBook(updatedBook);
   };
 
   const handleFilterChange = (selectedGenres) => {
@@ -66,15 +62,8 @@ export default function Books({ wishlist, onToggleWishlist }) {
   };
 
   const handleBookClick = (book) => {
-    setSelectedBook(book);
-    setIsModalOpen(true);
+    openBookModal(book);
     navigate(`/books/${book._id}/details`);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedBook(null);
-    navigate("/books");
   };
 
   return (
@@ -85,8 +74,7 @@ export default function Books({ wishlist, onToggleWishlist }) {
 
           {books.length === 0 ? (
             <p className="no-books-message">
-              Oops! There are no books available at the moment. Check back
-              later!
+              Oops! There are no books available at the moment. Check back later!
             </p>
           ) : (
             <section className="book-grid">
@@ -115,12 +103,17 @@ export default function Books({ wishlist, onToggleWishlist }) {
                     data={popular}
                     component="BookCard"
                     onItemClick={handleBookClick}
+                    wishlist={wishlist} 
+                    onToggleWishlist={onToggleWishlist} 
                   />
                   <ScrollableSection
                     sectionTitle="New Book Arrivals"
                     data={latest}
                     component="BookCard"
                     onItemClick={handleBookClick}
+                    wishlist={wishlist} 
+                    onToggleWishlist={onToggleWishlist} 
+
                   />
                   <ScrollableSection
                     sectionTitle="Authors"
@@ -134,6 +127,8 @@ export default function Books({ wishlist, onToggleWishlist }) {
                   data={books}
                   component="BookCard"
                   onItemClick={handleBookClick}
+                  wishlist={wishlist} 
+                    onToggleWishlist={onToggleWishlist} 
                 />
               )}
             </section>
@@ -141,17 +136,18 @@ export default function Books({ wishlist, onToggleWishlist }) {
         </article>
       </main>
 
-      <BookModal
-        book={selectedBook}
-        isOpen={isModalOpen}
-        onUpdate={handleRatingUpdate}
-        setBook={setSelectedBook}
-        onClose={handleCloseModal}
-        isOwner={selectedBook?._ownerId === user?._id}
-        isAuth={isAuthenticated}
-        wishlist={wishlist}
-        onWishlistToggle={onToggleWishlist}
-      />
+      {selectedBook && (
+        <BookModal
+          wishlist={wishlist}
+          onWishlistToggle={onToggleWishlist}
+          onUpdate={handleRatingUpdate}
+          isAuth={isAuthenticated}
+          isOwner={selectedBook?._ownerId === user?._id}
+          onClose={closeBookModal}
+        />
+      )}
     </>
   );
 }
+
+

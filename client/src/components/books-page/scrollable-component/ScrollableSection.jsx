@@ -8,6 +8,8 @@ export default function ScrollableSection({
   data,
   component = "BookCard",
   onItemClick,
+  wishlist,
+  onToggleWishlist,
 }) {
   const scrollContainerRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -33,14 +35,13 @@ export default function ScrollableSection({
   const renderItem = (item) => {
     switch (component) {
       case "BookCard":
-        return <BookCard key={item._id} book={item} onBookClick={onItemClick} />;
-      case "AuthorCard":
         return (
-          <Authors
+          <BookCard
             key={item._id}
-            authorName={item.authorName}
-            avatar={item.avatar}
-            booksCount={item.booksCount}
+            book={item}
+            onClick={() => onItemClick(item)}
+            wishlist={wishlist}
+            onToggleWishlist={onToggleWishlist}
           />
         );
       default:

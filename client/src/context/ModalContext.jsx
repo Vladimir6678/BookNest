@@ -9,12 +9,16 @@ export function BookModalProvider({ children }) {
   const closeBookModal = () => setSelectedBook(null);
 
   return (
-    <BookModalContext.Provider
-      value={{ selectedBook, openBookModal, closeBookModal }}
-    >
+    <BookModalContext.Provider value={{ selectedBook, openBookModal, closeBookModal }}>
       {children}
     </BookModalContext.Provider>
   );
 }
 
-export const useBookModal = () => useContext(BookModalContext);
+export function useBookModal() {
+  return useContext(BookModalContext);
+}
+
+
+
+

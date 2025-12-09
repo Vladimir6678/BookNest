@@ -5,9 +5,9 @@ export default function Footer() {
     <>
       <footer id="foot-section">
         <h1 id="foot-title">BookNest</h1>
-        <div class="foot-invoices">
+        <div className="foot-invoices">
           <h2>About</h2>
-          <hgroup class="links-section">
+          <hgroup className="links-section">
             <h3>
               <a href="#">Careers</a>
             </h3>
@@ -19,9 +19,9 @@ export default function Footer() {
             </h3>
           </hgroup>
         </div>
-        <div class="foot-invoices">
+        <div className="foot-invoices">
           <h2>Support</h2>
-          <hgroup class="links-section">
+          <hgroup className="links-section">
             <h3>
               <a href="#">Contact Us - (415) 802-7394</a>
             </h3>

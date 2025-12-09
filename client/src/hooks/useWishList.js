@@ -1,78 +1,52 @@
-import { useContext, useEffect, useState, useRef, useCallback } from "react";
-import UserContext from "../context/UserContext.jsx";
+import { useState, useEffect, useContext } from "react";
 import useFetch from "./useFetch.js";
+import UserContext from "../context/UserContext.jsx";
 
 export default function useWishlist() {
-    const { user } = useContext(UserContext);
-    const { request } = useFetch();
-    const [wishlist, setWishlist] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const mountedRef = useRef(true);
+  const { request } = useFetch();
+  const { user } = useContext(UserContext);
+  const [wishlist, setWishlist] = useState([]);
 
-    useEffect(() => {
-        mountedRef.current = true;
-        return () => (mountedRef.current = false);
-    }, []);
+  useEffect(() => {
+    if (user?.accessToken) {
+      loadWishlist();
+    } else {
+      setWishlist([]);
+    }
+  }, [user?.accessToken, request]);
 
-    const fetchWishlist = useCallback(async () => {
-        if (!user?._id) {
-            setWishlist([]);
-            setLoading(false);
-            return;
-        }
+  const loadWishlist = async () => {
+    try {
+      const data = await request("/data/wishlist", "GET");
+      setWishlist(data || []);
+    } catch (error) {
+      console.error("Failed to load wishlist:", error);
+      setWishlist([]);
+    }
+  };
 
-        try {
-            const data = await request(`/users/${user._id}/wishlist`, "GET", null, {
-                accessToken: user.accessToken,
-            });
+  const toggleWishlist = async (book) => {
+    if (!user?.accessToken) {
+      alert("Please log in to manage your wishlist.");
+      return;
+    }
 
-            if (mountedRef.current) {
-                setWishlist(Array.isArray(data) ? data : []);
-            }
-        } catch (err) {
-            console.error("wishlist fetch error", err);
-        } finally {
-            if (mountedRef.current) setLoading(false);
-        }
-    }, [user, request]);
+    const isInWishlist = wishlist.some((b) => b._id === book._id);
 
-    useEffect(() => {
-        fetchWishlist();
-    }, [fetchWishlist]);
+    try {
+      if (isInWishlist) {
+        await request(`/data/wishlist/${book._id}`, "DELETE");
+        setWishlist((prev) => prev.filter((b) => b._id !== book._id));
+      } else {
+        await request("/data/wishlist", "POST", { bookId: book._id });
+        setWishlist((prev) => [...prev, book]);
+      }
+    } catch (error) {
+      console.error(`Failed to ${isInWishlist ? "remove from" : "add to"} wishlist:`, error);
+      alert("Failed to update wishlist. Please try again.");
+      loadWishlist();
+    }
+  };
 
-    const toggleWishlist = async (book) => {
-        if (!user?._id) return [];
-
-        const exists = wishlist.some((x) => x._id === book._id);
-        const prev = wishlist;
-        const newWishlist = exists ? prev.filter((b) => b._id !== book._id) : [...prev, book]
-
-        setWishlist(newWishlist);
-
-        try {
-            if (exists) {
-                await request(
-                    `/users/${user._id}/wishlist/${book._id}`,
-                    "DELETE",
-                    null,
-                    { accessToken: user.accessToken }
-                );
-            } else {
-                await request(
-                    `/users/${user._id}/wishlist/${book._id}`,
-                    "POST",
-                    null,
-                    { accessToken: user.accessToken }
-                );
-            }
-        } catch (err) {
-            console.error("wishlist toggle error:", err);
-
-            if (mountedRef.current) setWishlist(prev);
-            return prev
-        }
-        return newWishlist;
-    };
-
-    return { wishlist, loading, toggleWishlist };
+  return { wishlist, toggleWishlist };
 }

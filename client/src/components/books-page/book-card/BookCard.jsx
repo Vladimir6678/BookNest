@@ -1,27 +1,18 @@
+
 import "./book-card-styles.css";
-export default function BookCard({ book, onBookClick = () => {} }) {
-  const handleCardClick = () => {
-    onBookClick(book);
-  };
+
+export default function BookCard({ book, onClick, wishlist = [], onToggleWishlist }) {
+  const isInWishlist = wishlist.some((b) => b._id === book._id);
 
   return (
-    <article className="card" onClick={handleCardClick}>
-
-      <div className="image-wrapper">
-        <img
-          src={book?.imageUrl}
-          alt={`${book?.title} Cover`}
-        />
-
-      </div>
-      
-  
+    <div className="book-card" onClick={onClick}>
+      <img src={book.imageUrl} alt={book.title} className="book-image" />
       <div className="book-info">
-      
-        <h2 className="book-title">{book?.title}</h2>
-        <p className="book-author">{book?.author}</p>
+        <h3>{book.title}</h3>
+        <p className="author">{book.author}</p>
       </div>
-
-    </article>
+    
+    </div>
   );
 }
+
