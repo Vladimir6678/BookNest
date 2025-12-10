@@ -2,36 +2,32 @@ import { FaHeart } from "react-icons/fa";
 import { useWishlistContext } from "../../../context/WishlistContext.jsx";
 import { useContext } from "react";
 import UserContext from "../../../context/UserContext.jsx";
+import "./wishlist-button.css";
 
+export default function WishlistButton({ book, style = {} }) {
+  const { wishlist, toggleWishlist } = useWishlistContext();
+  const { user } = useContext(UserContext);
 
-export default function WishlistButton({ book, style = {} }) { 
+  const wishlistItem = wishlist.find((w) => w.bookId === book._id);
 
-    const { wishlist, toggleWishlist } = useWishlistContext();
-    const { user } = useContext(UserContext); 
-    
+  const isInWishlist = !!wishlistItem;
 
-    const isInWishlist = wishlist.some((w) => w.bookId === book._id);
+  const handleClick = async (e) => {
+    e.stopPropagation();
 
-    const handleClick = async (e) => {
-        if (!user) {
-            alert("Please log in to manage your wishlist.");
-            return;
-        }
+    if (!user || !user.accessToken) {
+      alert("Please log in to manage your wishlist.");
+      return;
+    }
 
-        e.stopPropagation();
-        
-       
-        await toggleWishlist(book); 
-        
-        
-        console.log(`Toggled wishlist status for book: ${book.title}`); 
-    };
+    await toggleWishlist(book, wishlistItem?._id);
+  };
 
-    const buttonClassName = `wishlist-button ${isInWishlist ? 'active' : ''}`;
+  const buttonClassName = `wishlist-button ${isInWishlist ? "active" : ""}`;
 
-    return (
-        <button className={buttonClassName} onClick={handleClick} style={style}>
-            <FaHeart />
-        </button>
-    );
+  return (
+    <button className={buttonClassName} onClick={handleClick} style={style}>
+      <FaHeart />
+    </button>
+  );
 }

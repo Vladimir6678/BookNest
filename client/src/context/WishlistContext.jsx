@@ -4,101 +4,102 @@ import UserContext from "./UserContext.jsx";
 
 const WishlistContext = createContext();
 
-function useWishlistLogic() {
-    const { request } = useFetch();
-    const { user } = useContext(UserContext);
-    const [wishlist, setWishlist] = useState([]);
-
-    const loadWishlist = async () => {
-        if (!user || !user.accessToken) {
-            setWishlist([]);
-            return;
-        }
-        try {
-            const data = await request('/data/wishlist', 'GET', null, {
-                Authorization: `Bearer ${user.accessToken}`,
-            });
-            setWishlist(data);
-        } catch (error) {
-            console.error("Failed to load wishlist:", error);
-            setWishlist([]);
-        }
-    };
-
-    useEffect(() => {
-        loadWishlist();
-    }, [user, request]);
-
-    const toggleWishlist = async (book) => {
-        if (!user || !user.accessToken) {
-            alert("Please log in to manage your wishlist.");
-            return wishlist;
-        }
-
-        const wishlistItem = wishlist.find((w) => w.bookId === book._id);
-
-        if (wishlistItem) {
-
-            const wishlistItemIdToDelete = wishlistItem._id;
-
-            const method = 'DELETE';
-            const endpoint = `/data/wishlist/${wishlistItemIdToDelete}`;
-
-            setWishlist(w => w.filter(item => item._id !== wishlistItemIdToDelete));
-
-            try {
-                await request(endpoint, method, null, {
-                    Authorization: `Bearer ${user.accessToken}`,
-                });
-            } catch (error) {
-                console.error("Failed to remove book:", error);
-                alert("Failed to update wishlist. Please try again.");
-                loadWishlist();
-            }
-        } else {
-            const method = 'POST';
-            const endpoint = '/data/wishlist';
-
-            const postData = {
-                bookId: book._id,
-                title: book.title,
-                imageUrl: book.imageUrl,
-            };
-
-            setWishlist(w => [...w, postData]);
-
-            try {
-                const newWishlistItem = await request(endpoint, method, postData, {
-                    Authorization: `Bearer ${user.accessToken}`,
-                });
-
-
-                setWishlist(w => {
-                    return w.map(item => item.bookId === book._id && item._id === undefined ? newWishlistItem : item);
-                });
-
-            } catch (error) {
-                console.error("Failed to add book:", error);
-                alert("Failed to update wishlist. Please try again.");
-                loadWishlist();
-            }
-        }
-    };
-
-    return { wishlist, toggleWishlist, loadWishlist };
-}
-
-
 export function WishlistProvider({ children }) {
-    const contextValue = useWishlistLogic();
-    return (
-        <WishlistContext.Provider value={contextValue}>
-            {children}
-        </WishlistContext.Provider>
-    );
+  const contextValue = useWishlistLogic();
+  return (
+    <WishlistContext.Provider value={contextValue}>
+      {children}
+    </WishlistContext.Provider>
+  );
 }
-
 
 export function useWishlistContext() {
-    return useContext(WishlistContext);
+  return useContext(WishlistContext);
+}
+
+function useWishlistLogic() {
+  const { request } = useFetch();
+  const { user } = useContext(UserContext);
+  const [wishlist, setWishlist] = useState([]);
+
+  // Load wishlist for the current user
+  const loadWishlist = async () => {
+    if (!user || !user.accessToken) {
+      setWishlist([]);
+      return;
+    }
+
+    try {
+      // SoftUni API: get wishlist items by owner
+      const data = await request(
+        `/data/wishlist?where=_ownerId%3D"${user._id}"`,
+        "GET",
+        null,
+        { accessToken: user.accessToken }
+      );
+      setWishlist(data);
+    } catch (err) {
+      console.error("Failed to load wishlist:", err);
+      setWishlist([]);
+    }
+  };
+
+  useEffect(() => {
+    loadWishlist();
+  }, [user]);
+
+  // Add book with full info
+  const addToWishlist = async (book) => {
+    if (!user || !user.accessToken) return;
+
+    try {
+      const postData = {
+        bookId: book._id,
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        imageUrl: book.imageUrl,
+        pdfUrl: book.pdfUrl,
+        description: book.description,
+      };
+
+      const newItem = await request("/data/wishlist", "POST", postData, {
+        accessToken: user.accessToken,
+      });
+      setWishlist((prev) => [...prev, newItem]);
+    } catch (err) {
+      console.error("Failed to add book:", err);
+      alert("Failed to add book to wishlist.");
+    }
+  };
+
+  // Remove from wishlist by wishlist item ID
+  const removeFromWishlist = async (wishlistItemId) => {
+    if (!user || !user.accessToken) return;
+
+    try {
+      await request(`/data/wishlist/${wishlistItemId}`, "DELETE", null, {
+        accessToken: user.accessToken,
+      });
+      setWishlist((prev) => prev.filter((item) => item._id !== wishlistItemId));
+    } catch (err) {
+      console.error("Failed to remove book:", err);
+      alert("Failed to remove book from wishlist.");
+    }
+  };
+
+  const toggleWishlist = async (book, wishlistItemId) => {
+    if (!user || !user.accessToken) {
+      alert("Please log in to manage your wishlist.");
+      return;
+    }
+
+    if (wishlistItemId) {
+      await removeFromWishlist(wishlistItemId);
+    } else {
+      await addToWishlist(book);
+    }
+  };
+
+  return { wishlist, toggleWishlist, loadWishlist };
 }

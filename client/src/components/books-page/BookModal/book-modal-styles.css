@@ -123,7 +123,34 @@
   font-style: italic;
   line-height: 1.6;
 }
+.download-btn {
+  margin-top: 18px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: rgb(248, 248, 248);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
 
+.download-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+}
 
 @media (max-width: 768px) {
   .modal-body {

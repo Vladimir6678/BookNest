@@ -1,48 +1,30 @@
-import { useState } from "react";
 import "./genre-dropdown.css";
 
-function GenreDropdown() {
-  const [selectedGenre, setSelectedGenre] = useState('');
-
+export default function GenreDropdown({ value, onChange }) {
   const genres = [
-    'Action',
-    'Adventure',
-    'Comedy',
-    'Drama',
-    'Fantasy',
-    'Horror',
-    'Mystery',
-    'Romance',
-    'Sci-Fi',
-    'Thriller'
+    "Fantasy",
+    "Sci-Fi",
+    "Romance",
+    "Mystery",
+    "Thriller",
+    "Horror",
+    "Non-fiction",
   ];
 
-  const handleGenreChange = (event) => {
-    setSelectedGenre(event.target.value);
-  
-  };
-
   return (
-    <div className="genre-dropdown-container">
-      <label htmlFor="genre-select">Choose a genre:</label>
-      <select 
-        id="genre-select" 
-        value={selectedGenre} 
-        onChange={handleGenreChange}
+    <div className="genre-dropdown">
+      <label>Genre</label>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       >
-        <option value="">-- Select a genre --</option>
-        {genres.map((genre, index) => (
-          <option key={index} value={genre.toLowerCase()}>
-            {genre}
+        <option value="">Select Genre</option>
+        {genres.map((g) => (
+          <option key={g} value={g}>
+            {g}
           </option>
         ))}
       </select>
-
-      {selectedGenre && (
-        <p>Selected genre: {selectedGenre}</p>
-      )}
     </div>
   );
 }
-
-export default GenreDropdown;

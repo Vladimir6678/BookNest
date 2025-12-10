@@ -17,7 +17,7 @@ export default function Books() {
   const { user, isAuthenticated } = useContext(UserContext);
   const { selectedBook, openBookModal, closeBookModal } = useBookModal();
   const { wishlist, toggleWishlist } = useWishlistContext();
-  
+
 
   const [books, setBooks] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -30,6 +30,7 @@ export default function Books() {
       try {
         const result = await request("/data/books", "GET");
         setBooks(result);
+        console.log(result);
         setLatest(result.slice(-7).reverse());
         const trending = getTrendingBooks(result, 5);
         setPopular(trending.slice(-7).reverse());
@@ -66,67 +67,74 @@ export default function Books() {
     openBookModal(book);
     navigate(`/books/${book._id}/details`);
   };
-  
-  const {searchTerm, handleSearchChange, filteredBooks } = useSearchFilter(books);
+
+  const { searchTerm, handleSearchChange, filteredBooks } = useSearchFilter(books);
 
   return (
-   <>
-            <main id="main-books-page">
-                <article className="filter-site">
-                    
+    <>
+      <main id="main-books-page">
+        <article className="filter-site">
 
-                    {books.length === 0 ? (
-                        <p className="no-books-message">
-                            Oops! There are no books available at the moment. Check back later!
-                        </p>
-                    ) : (
-                        <section className="book-grid">
-                          <HeroBanner totalBooks={books.length}/>
-                            <h2>Explore Books</h2>
 
-                            <div className="search-controls">
-                                <input
-                                    type="text"
-                                    placeholder="Search by title, author, or genre"
-                                    className="search-bar"
-                                    value={searchTerm} 
-                                    onChange={handleSearchChange} 
-                                />
-                             
-                                <select
-                                    className="view-select"
-                                    value={selectedView}
-                                    onChange={(e) => setSelectedView(e.target.value)}
-                                >
-                                    <option value="default">Default View</option>
-                                    <option value="all">All Books</option>
-                                </select>
-                            </div>
+          {books.length === 0 ? (
+            <p className="no-books-message">
+              Oops! There are no books available at the moment. Check back later!
+            </p>
+          ) : (
+            <section className="book-grid">
+              <HeroBanner totalBooks={books.length} />
+              <h2>Explore Books</h2>
 
-                            <BooksContent 
-                                allBooks={books}
-                                latest={latest}
-                                popular={popular}
-                                authors={authors}
-                                selectedView={selectedView}
-                                handleBookClick={handleBookClick}
-                                searchTerm={searchTerm} 
-                                filteredBooks={filteredBooks} 
-                            />
-                        </section>
-                    )}
-                </article>
-            </main>
-
-            {selectedBook && (
-                <BookModal
-                    onUpdate={handleRatingUpdate}
-                    isAuth={isAuthenticated}
-                    isOwner={selectedBook?._ownerId === user?._id}
-                    onClose={closeBookModal}
+              <div className="search-controls">
+                <input
+                  type="text"
+                  placeholder="Search by title, author, or genre"
+                  className="search-bar"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                 />
-            )}
-        </>
-    );
+
+                <select
+                  className="view-select"
+                  value={selectedView}
+                  onChange={(e) => setSelectedView(e.target.value)}
+                >
+                  <option value="default">Default View</option>
+                  <option value="all">All Books</option>
+                </select>
+              </div>
+
+              {books.length > 0 && filteredBooks && latest && popular && authors ? (
+                <BooksContent
+                  allBooks={books}
+                  latest={latest}
+                  popular={popular}
+                  authors={authors}
+                  selectedView={selectedView}
+                  handleBookClick={handleBookClick}
+                  searchTerm={searchTerm}
+                  filteredBooks={filteredBooks}
+                />
+              ) : (
+                <p className="no-books-message">
+                  Oops! There are no books available at the moment. Check back later!
+                </p>
+              )}
+
+            </section>
+          )}
+        </article>
+      </main>
+
+      {selectedBook && (
+        <BookModal
+          onUpdate={handleRatingUpdate}
+          isAuth={isAuthenticated}
+          isOwner={selectedBook?._ownerId === user?._id}
+          onClose={closeBookModal}
+        />
+      )}
+    </>
+  );
 }
 

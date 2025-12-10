@@ -1,4 +1,4 @@
-export default function InputField({ label, type, name, value, onChange, placeholder, textarea }) {
+export default function InputField({ label, type, name, value, placeholder, textarea, acceptFileType, onChange = null}) {
   return (
     <div className="form-group">
       <label>{label}</label>
@@ -16,6 +16,7 @@ export default function InputField({ label, type, name, value, onChange, placeho
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          accept={acceptFileType}  
         />
       )}
     </div>

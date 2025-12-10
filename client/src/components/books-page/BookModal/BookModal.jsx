@@ -94,17 +94,17 @@ export default function BookModal({ onUpdate, isAuth, isOwner, OnClose }) {
             <p className="genre">Genre: {book.genre}</p>
             <p className="description">{book.description}</p>
 
-            {isOwner && (
+            {isOwner ? (
               <div className="modal-actions">
                 <Link to={`/books/${book._id}/edit`} className="edit-btn">
                   Edit
                 </Link>
                 <button className="delete-btn" onClick={deleteBook}>Delete</button>
               </div>
-            )}
+            ) : ( <Link to={book.pdfUrl}><button className="download-btn" >Download</button></Link>)}
 
             <Rating book={book} onUpdate={onUpdate} />
-            <CommentSection isAuth={isAuth} />
+            <CommentSection book={book} isAuth={isAuth} />
           </div>
         </div>
       </div>

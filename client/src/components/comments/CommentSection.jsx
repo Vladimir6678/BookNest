@@ -4,7 +4,7 @@ import CommentContext from "../../context/CommentContext";
 import UserContext from "../../context/UserContext";
 import "./comments.css";
 
-export default function CommentSection() {
+export default function CommentSection(book) {
   const { comments, getAllComments, addComment, deleteComment } =
     useContext(CommentContext);
   const { user, isAuthenticated } = useContext(UserContext);
@@ -75,6 +75,8 @@ export default function CommentSection() {
                   Delete
                 </button>
               )}
+
+              
             </li>
           ))}
         </ul>
