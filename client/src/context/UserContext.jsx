@@ -18,7 +18,6 @@ const UserContext = createContext({
 });
 
 export function UserProvider({children}) {
-    
       useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {

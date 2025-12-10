@@ -39,7 +39,7 @@ export default function CreateBook() {
         <InputField label="Book Title" type="text" placeholder="Enter book title" {...register("title")} />
         <InputField label="Author" type="text" placeholder="Author's name" {...register("author")} />
         <InputField label="Genre" type="text" placeholder="Genre" {...register("genre")} />
-        <InputField label="Image URL" type="text" placeholder="URL of the book cover" {...register("imageUrl")} />
+        <InputField label="Image File" type="file" placeholder="Pdf of the book cover" {...register("imageUrl")} />
 
         {values.imageUrl && (
           <div className="image-preview">
@@ -52,7 +52,7 @@ export default function CreateBook() {
         )}
 
         <InputField label="Description" placeholder="Short summary of the book" textarea {...register("description")} />
-        <InputField label="PDF File URL" type="text" placeholder="Paste a PDF link here" {...register("pdfUrl")} />
+        <InputField label="PDF File URL" type="file" placeholder="Paste a PDF link here" {...register("pdfUrl")} />
 
         <button type="submit" className="create-btn">Create Book</button>
       </form>

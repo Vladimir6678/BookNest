@@ -1,5 +1,4 @@
 import BookCard from "../book-card/BookCard";
-import Authors from "../author-component/Author";
 import "./scrollable-section-styles.css";
 import { useRef, useState } from "react";
 
