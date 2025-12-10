@@ -3,7 +3,7 @@ import InputField from "../input/InputField.jsx";
 import useForm from "../../hooks/useForm.js";
 import { useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch.js";
-
+import GenreDropdown from "../genre-dropdown/GenreDropDown.jsx";
 export default function CreateBook() {
   const navigate = useNavigate();
   const { request } = useFetch();
@@ -38,7 +38,7 @@ export default function CreateBook() {
 
         <InputField label="Book Title" type="text" placeholder="Enter book title" {...register("title")} />
         <InputField label="Author" type="text" placeholder="Author's name" {...register("author")} />
-        <InputField label="Genre" type="text" placeholder="Genre" {...register("genre")} />
+        <GenreDropdown  />
         <InputField label="Image File" type="file" placeholder="Pdf of the book cover" {...register("imageUrl")} />
 
         {values.imageUrl && (

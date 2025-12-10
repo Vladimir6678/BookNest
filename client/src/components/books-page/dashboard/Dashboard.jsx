@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
-
 import BookModal from "../BookModal/BookModal.jsx";
 import { getTrendingBooks } from "../../../../utills/getTrendingBooks.js";
 import useFetch from "../../../hooks/useFetch.js";
@@ -10,6 +9,7 @@ import { useWishlistContext } from "../../../context/WishlistContext.jsx";
 import BooksContent from "../../dashboardContent/BooksContent.jsx";
 import "./dashboard-styles.css";
 import { useSearchFilter } from "../../../hooks/useSearchFilter.js";
+import HeroBanner from "../hero-banner/HeroBanner.jsx";
 
 export default function Books() {
   const navigate = useNavigate();
@@ -81,6 +81,7 @@ export default function Books() {
                         </p>
                     ) : (
                         <section className="book-grid">
+                          <HeroBanner totalBooks={books.length}/>
                             <h2>Explore Books</h2>
 
                             <div className="search-controls">
