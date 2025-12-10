@@ -1,0 +1,152 @@
+
+.notfound-page {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #F9F6F2, #F1ECE6);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+
+.shape {
+    position: absolute;
+    background: #E8E1D9;
+    border-radius: 20px;
+    opacity: 0.55;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    filter: blur(1px);
+    animation: float 8s ease-in-out infinite alternate;
+}
+
+.shape-1 {
+    top: 3.5rem;
+    left: 2.5rem;
+    width: 160px;
+    height: 110px;
+    transform: rotate(-8deg);
+}
+
+.shape-2 {
+    top: 7rem;
+    right: 3.5rem;
+    width: 120px;
+    height: 85px;
+    background: #EDE6DE;
+    transform: rotate(6deg);
+}
+
+.shape-3 {
+    bottom: 5rem;
+    left: 5rem;
+    width: 150px;
+    height: 70px;
+    background: #F0EAE3;
+    transform: rotate(3deg);
+}
+
+.shape-4 {
+    bottom: 3.5rem;
+    right: 6rem;
+    width: 110px;
+    height: 60px;
+    background: #F5EFE9;
+    transform: rotate(-4deg);
+}
+
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(var(--r)); }
+    100% { transform: translateY(-15px) rotate(var(--r)); }
+}
+
+
+.circles {
+    position: absolute;
+    inset: 0;
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.circles circle:first-child {
+    fill: #E1D8CF;
+}
+.circles circle:last-child {
+    fill: #EFE6DE;
+}
+
+.notfound-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 3.5rem 3rem;
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    max-width: 480px;
+    width: 100%;
+    border: 1px solid #EFEAE4;
+    text-align: center;
+    z-index: 10;
+}
+
+
+.nf-title {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #6C544C;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 3px 4px rgba(0,0,0,0.12);
+}
+
+.nf-subtitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #7E6A60;
+    margin-bottom: 1rem;
+}
+
+.nf-text {
+    color: #9D8B82;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+
+.nf-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    padding: 0.8rem 1.6rem;
+    border-radius: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #C9B8A8;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #B8A697;
+    transform: scale(0.97);
+}
+
+.btn-secondary {
+    background: #E8E1D9;
+    color: #6C544C;
+}
+
+.btn-secondary:hover {
+    background: #DDD4CC;
+    transform: scale(0.97);
+}

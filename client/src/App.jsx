@@ -7,9 +7,12 @@ import Register from "./components/register/Register.jsx";
 import CreateBook from "./components/createBook/CreateBook.jsx";
 import WishList from "./components/wishlist/WishList.jsx";
 import EditBook from "./components/edit-book/EditBook.jsx";
+import GuestGuard from "./guards/GuestGuard.jsx";
+import PrivateGuard from "./guards/PrivateGuard.jsx";
 
 import { WishlistProvider } from "./context/WishlistContext.jsx";
 import { BookModalProvider } from "./context/ModalContext.jsx";
+import NotFound from "./components/notFound/NotFound.jsx";
 
 export default function App() {
 
@@ -23,11 +26,19 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/books" element={<Books />} />
             <Route path="/books/:bookId/details" element={<Books />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/create" element={<CreateBook />} />
-            <Route path="/wishlist"element={<WishList />} />
-            <Route path="/books/:bookId/edit" element={<EditBook />} />
+
+            <Route element={<GuestGuard />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
+
+            <Route element={<PrivateGuard />}>
+              <Route path="/create" element={<CreateBook />} />
+              <Route path="/wishlist" element={<WishList />} />
+              <Route path="/books/:bookId/edit" element={<EditBook />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </WishlistProvider>
 
